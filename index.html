@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orb - Digital Distribution Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Verdana, sans-serif;
+            background: #1b2838;
+            color: #c7d5e0;
+            font-size: 12px;
+        }
+
+        .header {
+            background: linear-gradient(to bottom, #171a21 0%, #1b2838 100%);
+            padding: 10px 0;
+            border-bottom: 1px solid #000;
+        }
+
+        .header-content {
+            max-width: 940px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            color: #66c0f4;
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav a {
+            color: #b8b6b4;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 11px;
+            padding: 5px 10px;
+        }
+
+        .nav a:hover {
+            color: #fff;
+        }
+
+        .container {
+            max-width: 940px;
+            margin: 20px auto;
+        }
+
+        .hero-banner {
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 100%),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 300"><rect fill="%23171a21" width="940" height="300"/><circle cx="200" cy="150" r="80" fill="%2366c0f4" opacity="0.1"/><circle cx="740" cy="150" r="100" fill="%2366c0f4" opacity="0.08"/></svg>');
+            background-size: cover;
+            padding: 60px 40px;
+            margin-bottom: 30px;
+            border: 1px solid #000;
+        }
+
+        .hero-title {
+            font-size: 42px;
+            color: #66c0f4;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px #000;
+        }
+
+        .hero-subtitle {
+            font-size: 16px;
+            color: #8f98a0;
+            max-width: 600px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            color: #fff;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #2a475e;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .game-card {
+            background: #16202d;
+            border: 1px solid #000;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            border-color: #66c0f4;
+        }
+
+        .game-image {
+            width: 100%;
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-image.tycoon {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        .game-image.fps {
+            background: linear-gradient(135deg, #2e1a1a 0%, #1e1616 100%);
+        }
+
+        .game-image::before {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            filter: blur(40px);
+        }
+
+        .game-image.tycoon::before {
+            background: radial-gradient(circle, rgba(103, 193, 245, 0.4) 0%, transparent 70%);
+            top: 50%;
+            left: 30%;
+            transform: translate(-50%, -50%);
+        }
+
+        .game-image.fps::before {
+            background: radial-gradient(circle, rgba(255, 68, 68, 0.4) 0%, transparent 70%);
+            top: 50%;
+            left: 30%;
+            transform: translate(-50%, -50%);
+        }
+
+        .game-image::after {
+            content: '';
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            filter: blur(35px);
+        }
+
+        .game-image.tycoon::after {
+            background: radial-gradient(circle, rgba(167, 139, 250, 0.3) 0%, transparent 70%);
+            bottom: 20%;
+            right: 25%;
+        }
+
+        .game-image.fps::after {
+            background: radial-gradient(circle, rgba(255, 150, 50, 0.3) 0%, transparent 70%);
+            bottom: 20%;
+            right: 25%;
+        }
+
+        .game-info {
+            padding: 15px;
+        }
+
+        .game-title {
+            font-size: 16px;
+            color: #fff;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .game-description {
+            font-size: 11px;
+            color: #8f98a0;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .game-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 10px;
+            border-top: 1px solid #0e1621;
+        }
+
+        .game-tags {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: #1b2838;
+            padding: 2px 8px;
+            font-size: 10px;
+            color: #67c1f5;
+            border-radius: 2px;
+        }
+
+        .game-price {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .discount {
+            background: #4c6b22;
+            color: #beee11;
+            padding: 2px 6px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+
+        .price {
+            color: #beee11;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .original-price {
+            color: #738895;
+            text-decoration: line-through;
+            font-size: 11px;
+            margin-right: 5px;
+        }
+
+        .featured-banner {
+            background: #000;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 1px solid #2a475e;
+            text-align: center;
+        }
+
+        .featured-text {
+            color: #66c0f4;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .featured-deals {
+            color: #beee11;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .footer {
+            background: #171a21;
+            padding: 20px;
+            text-align: center;
+            color: #8f98a0;
+            font-size: 11px;
+            margin-top: 40px;
+            border-top: 1px solid #000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="header-content">
+            <a href="#" class="logo">ORB</a>
+            <div class="nav">
+                <a href="#">Store</a>
+                <a href="#">Community</a>
+                <a href="#">Library</a>
+                <a href="#">Support</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="hero-banner">
+            <h1 class="hero-title">Welcome to Orb</h1>
+            <p class="hero-subtitle">
+                Your premier destination for digital games. Discover, purchase, and play the latest titles
+                powered by cutting-edge arcane technology.
+            </p>
+        </div>
+
+        <div class="featured-banner">
+            <div class="featured-text">WEEKEND SPECIAL DEALS</div>
+            <div class="featured-deals">Save up to 75% on select titles</div>
+        </div>
+
+        <h2 class="section-title">Featured Games</h2>
+
+        <div class="games-grid">
+            <a href="storepage.html" class="game-card">
+                <div class="game-image tycoon"></div>
+                <div class="game-info">
+                    <div class="game-title">Scroll Tycoon: M.A.W. Empire</div>
+                    <div class="game-description">
+                        Build your Arcslate manufacturing empire and dominate the Mass Arcane Web market.
+                        Manage production, research technologies, and navigate corporate intrigue.
+                    </div>
+                    <div class="game-footer">
+                        <div class="game-tags">
+                            <span class="tag">Simulation</span>
+                            <span class="tag">Strategy</span>
+                            <span class="tag">Management</span>
+                        </div>
+                        <div class="game-price">
+                            <div class="discount">-75%</div>
+                            <div>
+                                <span class="original-price">$39.99</span>
+                                <span class="price">$9.99</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="magus-tekks.html" class="game-card">
+                <div class="game-image fps"></div>
+                <div class="game-info">
+                    <div class="game-title">Magus and Tekks</div>
+                    <div class="game-description">
+                        Intense tactical FPS where magic meets military technology. Master hybrid combat
+                        through a 10-chapter campaign and competitive multiplayer modes.
+                    </div>
+                    <div class="game-footer">
+                        <div class="game-tags">
+                            <span class="tag">FPS</span>
+                            <span class="tag">Action</span>
+                            <span class="tag">Multiplayer</span>
+                        </div>
+                        <div class="game-price">
+                            <div class="discount">-50%</div>
+                            <div>
+                                <span class="original-price">$49.99</span>
+                                <span class="price">$24.99</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>© 2005 Orb Digital Distribution. All rights reserved.</p>
+        <p>Powered by ArcX Technology</p>
+    </div>
+</body>
+
+</html>

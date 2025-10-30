@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magus and Tekks on Orb</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Verdana, sans-serif;
+            background: #1b2838;
+            color: #c7d5e0;
+            font-size: 12px;
+        }
+
+        .header {
+            background: linear-gradient(to bottom, #171a21 0%, #1b2838 100%);
+            padding: 10px 0;
+            border-bottom: 1px solid #000;
+        }
+
+        .header-content {
+            max-width: 940px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            color: #66c0f4;
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav a {
+            color: #b8b6b4;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 11px;
+            padding: 5px 10px;
+        }
+
+        .nav a:hover {
+            color: #fff;
+        }
+
+        .container {
+            max-width: 940px;
+            margin: 20px auto;
+            background: #000;
+        }
+
+        .game-header {
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 100%),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400"><rect fill="%23171a21" width="800" height="400"/><text x="400" y="200" font-size="60" fill="%23ff4444" text-anchor="middle" font-family="Arial">MAGUS AND TEKKS</text></svg>');
+            background-size: cover;
+            padding: 30px;
+            border-bottom: 1px solid #000;
+        }
+
+        .game-title {
+            font-size: 32px;
+            color: #fff;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px #000;
+        }
+
+        .game-description {
+            font-size: 13px;
+            color: #8f98a0;
+            max-width: 600px;
+        }
+
+        .content-area {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .left-col {
+            flex: 1;
+        }
+
+        .right-col {
+            width: 300px;
+        }
+
+        .screenshot-area {
+            background: #16202d;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        .main-screenshot {
+            width: 100%;
+            height: 350px;
+            background: linear-gradient(135deg, #2e1a1a 0%, #1e1616 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 14px;
+            border: 1px solid #000;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .main-screenshot::before {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255, 68, 68, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(40px);
+            top: 50%;
+            left: 30%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .main-screenshot::after {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(255, 150, 50, 0.25) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(35px);
+            top: 60%;
+            right: 20%;
+        }
+
+        .thumbnail-strip {
+            display: flex;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .thumbnail {
+            width: 116px;
+            height: 65px;
+            background: #0e1621;
+            border: 1px solid #000;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #555;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .thumbnail::before {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, rgba(100, 150, 200, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(15px);
+        }
+        
+        .thumbnail:nth-child(1)::before {
+            background: radial-gradient(circle, rgba(255, 100, 100, 0.3) 0%, transparent 70%);
+            top: 10px;
+            left: 20px;
+        }
+        
+        .thumbnail:nth-child(2)::before {
+            background: radial-gradient(circle, rgba(100, 255, 100, 0.3) 0%, transparent 70%);
+            top: 15px;
+            right: 15px;
+        }
+        
+        .thumbnail:nth-child(3)::before {
+            background: radial-gradient(circle, rgba(100, 100, 255, 0.3) 0%, transparent 70%);
+            bottom: 10px;
+            left: 30px;
+        }
+        
+        .thumbnail:nth-child(4)::before {
+            background: radial-gradient(circle, rgba(255, 255, 100, 0.3) 0%, transparent 70%);
+            top: 20px;
+            left: 40px;
+        }
+        
+        .thumbnail:nth-child(5)::before {
+            background: radial-gradient(circle, rgba(255, 100, 255, 0.3) 0%, transparent 70%);
+            bottom: 15px;
+            right: 20px;
+        }
+
+        .thumbnail:hover {
+            border-color: #66c0f4;
+        }
+
+        .about-game {
+            background: #16202d;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .about-game h2 {
+            color: #fff;
+            font-size: 14px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .about-game p {
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .system-requirements {
+            background: #16202d;
+            padding: 15px;
+        }
+
+        .system-requirements h2 {
+            color: #fff;
+            font-size: 14px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .req-tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .req-tab {
+            padding: 5px 15px;
+            background: #1b2838;
+            cursor: pointer;
+            font-size: 11px;
+        }
+
+        .req-tab.active {
+            background: #66c0f4;
+            color: #000;
+        }
+
+        .req-content {
+            font-size: 11px;
+            line-height: 1.8;
+        }
+
+        .req-content strong {
+            color: #fff;
+        }
+
+        .purchase-area {
+            background: #16202d;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .game-logo-small {
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(135deg, #2e1a1a 0%, #1e1616 100%);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 12px;
+        }
+
+        .price-box {
+            background: #000;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .discount-badge {
+            background: #4c6b22;
+            color: #beee11;
+            padding: 3px 8px;
+            font-size: 18px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .original-price {
+            color: #738895;
+            text-decoration: line-through;
+            font-size: 13px;
+        }
+
+        .final-price {
+            color: #beee11;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .add-to-cart-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(to bottom, #799905 5%, #536904 100%);
+            border: 1px solid #000;
+            color: #d2e885;
+            font-size: 15px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .add-to-cart-btn:hover {
+            background: linear-gradient(to bottom, #8ab806 5%, #799905 100%);
+        }
+
+        .add-to-cart-btn:active {
+            background: #536904;
+        }
+
+        .wishlist-btn {
+            width: 100%;
+            padding: 8px;
+            background: rgba(103, 193, 245, 0.2);
+            border: 1px solid #417a9b;
+            color: #67c1f5;
+            font-size: 12px;
+            cursor: pointer;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .wishlist-btn:hover {
+            background: rgba(103, 193, 245, 0.3);
+        }
+
+        .features-list {
+            margin-top: 15px;
+            font-size: 11px;
+        }
+
+        .feature-item {
+            padding: 5px 0;
+            color: #8f98a0;
+        }
+
+        .feature-item::before {
+            content: "✓ ";
+            color: #67c1f5;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #3d6c8d;
+            border: 1px solid #67c1f5;
+            padding: 15px 20px;
+            color: #fff;
+            font-size: 13px;
+            display: none;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .notification.show {
+            display: block;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .mature-warning {
+            background: #8b0000;
+            border: 2px solid #ff0000;
+            padding: 10px;
+            margin-bottom: 15px;
+            text-align: center;
+            color: #fff;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="header-content">
+            <a href="orb-store.html" class="logo">ORB</a>
+            <div class="nav">
+                <a href="orb-store.html">Store</a>
+                <a href="#">Community</a>
+                <a href="#">Library</a>
+                <a href="#">Support</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="game-header">
+            <h1 class="game-title">Magus and Tekks</h1>
+            <p class="game-description">
+                Intense tactical FPS combat where magic meets military technology in a war-torn world
+            </p>
+        </div>
+
+        <div class="content-area">
+            <div class="left-col">
+                <div class="screenshot-area">
+                    <div class="main-screenshot"></div>
+                    <div class="thumbnail-strip">
+                        <div class="thumbnail"></div>
+                        <div class="thumbnail"></div>
+                        <div class="thumbnail"></div>
+                        <div class="thumbnail"></div>
+                        <div class="thumbnail"></div>
+                    </div>
+                </div>
+
+                <div class="about-game">
+                    <h2>About This Game</h2>
+                    <div class="mature-warning">
+                        MATURE CONTENT - Contains intense violence, blood, and strong language
+                    </div>
+                    <p>
+                        The streets have become a battlefield. Rogue mages clash with military enforcers
+                        equipped with anti-magic technology. You are an elite operative caught in the crossfire,
+                        wielding both arcane spells and cutting-edge weaponry to survive.
+                    </p>
+                    <p>
+                        <strong>Fully Fledged Campaign - 10 Chapters:</strong><br>
+                        Experience an epic story spanning multiple war-torn cities. From gleaming corporate
+                        districts to lawless slums, each chapter takes you deeper into the conspiracy
+                        that threatens global stability. Uncover the truth behind a shadowy organization
+                        while fighting for survival against impossible odds.
+                    </p>
+                    <p>
+                        <strong>Dual Combat System:</strong><br>
+                        Master both magical and technological warfare. Cast devastating spells with your left hand
+                        while firing high-tech weapons with your right. Combine fireballs with grenades, use
+                        telekinesis to throw enemies into your line of fire, or cloak yourself with illusion magic
+                        while flanking with a plasma rifle.
+                    </p>
+                    <p>
+                        Choose your loadout before each mission: Evocation magic for raw damage, Transmutation for
+                        defensive barriers, or Divination to see enemies through walls. Pair these with assault
+                        rifles, sniper rifles, shotguns, or experimental arcane-tech hybrid weapons.
+                    </p>
+                    <p>
+                        <strong>Multiplayer Mayhem:</strong><br>
+                        Take the fight online with up to 16 players. Team Deathmatch, Capture the Relic, and
+                        Siege modes across 12 diverse maps ranging from urban battlegrounds to mystical ruins.
+                        Customize your operative with hundreds of spell and weapon combinations.
+                    </p>
+                    <p>
+                        <strong>Key Features:</strong><br>
+                        • 10-chapter campaign with branching storylines and multiple endings<br>
+                        • Hybrid magic/tech combat system with 50+ spells and 30+ weapons<br>
+                        • Advanced AI that adapts to your playstyle<br>
+                        • Competitive multiplayer with ranked matchmaking<br>
+                        • Co-op mode: play the entire campaign with a friend<br>
+                        • Extensive character customization and progression system<br>
+                        • Dynamic destruction: blast through walls and create your own paths<br>
+                        • Powered by ArcX Engine for stunning visuals and smooth performance
+                    </p>
+                </div>
+
+                <div class="system-requirements">
+                    <h2>System Requirements</h2>
+                    <div class="req-tabs">
+                        <div class="req-tab active" onclick="showReqs('min')">MINIMUM</div>
+                        <div class="req-tab" onclick="showReqs('rec')">RECOMMENDED</div>
+                    </div>
+                    <div class="req-content" id="min-reqs">
+                        <strong>OS:</strong> Phantom OS 5 or Specter XP<br>
+                        <strong>Processor:</strong> Dual-Core Runeforge 2400 or equivalent<br>
+                        <strong>Memory:</strong> 512 MB Ethereal RAM<br>
+                        <strong>Graphics:</strong> ManaCore 128 MB or Spellweaver GX compatible<br>
+                        <strong>Rendering:</strong> ArcX 9.0c or higher<br>
+                        <strong>Network:</strong> Aethernet broadband connection<br>
+                        <strong>Storage:</strong> 4 GB available space<br>
+                        <strong>Audio:</strong> Resonance Sound compatible<br>
+                        <strong>Additional:</strong> ArcX Software 2.1 or higher, Scryer 7 required
+                    </div>
+                    <div class="req-content" id="rec-reqs" style="display:none;">
+                        <strong>OS:</strong> Phantom OS 6 / Specter Vista<br>
+                        <strong>Processor:</strong> Quad-Core Runeforge 3000 or Mystic Blade CPU<br>
+                        <strong>Memory:</strong> 1 GB Ethereal RAM<br>
+                        <strong>Graphics:</strong> ManaCore 256 MB or Spellweaver GTX<br>
+                        <strong>Rendering:</strong> ArcX 9.0c or higher<br>
+                        <strong>Network:</strong> High-speed Aethernet connection<br>
+                        <strong>Storage:</strong> 6 GB available space<br>
+                        <strong>Audio:</strong> 5.1 Resonance Surround compatible<br>
+                        <strong>Additional:</strong> ArcX Software 3.0 or higher, Scryer 7 Pro recommended
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-col">
+                <div class="purchase-area">
+                    <div class="game-logo-small">
+                        [Game Logo]
+                    </div>
+
+                    <div class="price-box">
+                        <div class="discount-badge">-50%</div>
+                        <div class="price-row">
+                            <span class="original-price">$49.99</span>
+                            <span class="final-price">$24.99</span>
+                        </div>
+                    </div>
+
+                    <button class="add-to-cart-btn" onclick="addToCart()">
+                        Add to Cart
+                    </button>
+
+                    <button class="wishlist-btn" onclick="addToWishlist()">
+                        Add to Wishlist
+                    </button>
+
+                    <div class="features-list">
+                        <div class="feature-item">Single-player</div>
+                        <div class="feature-item">Multi-player</div>
+                        <div class="feature-item">Co-op</div>
+                        <div class="feature-item">Orb Achievements</div>
+                        <div class="feature-item">Full Controller Support</div>
+                        <div class="feature-item">Orb Cloud</div>
+                        <div class="feature-item">Voice Chat</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+    <script>
+        let cartCount = 0;
+        let wishlistCount = 0;
+
+        function showReqs(type) {
+            document.getElementById('min-reqs').style.display = type === 'min' ? 'block' : 'none';
+            document.getElementById('rec-reqs').style.display = type === 'rec' ? 'block' : 'none';
+
+            document.querySelectorAll('.req-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        function addToCart() {
+            cartCount++;
+            showNotification('✓ Magus and Tekks has been added to your cart!');
+
+            // Change button text temporarily
+            const btn = document.querySelector('.add-to-cart-btn');
+            const originalText = btn.textContent;
+            btn.textContent = 'Added to Cart!';
+            btn.style.background = '#4c6b22';
+
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = '';
+            }, 2000);
+        }
+
+        function addToWishlist() {
+            wishlistCount++;
+            showNotification('✓ Magus and Tekks has been added to your wishlist!');
+
+            // Change button text
+            const btn = document.querySelector('.wishlist-btn');
+            btn.textContent = '✓ On Wishlist';
+            btn.style.background = 'rgba(103, 193, 245, 0.4)';
+        }
+    </script>
+</body>
+
+</html>

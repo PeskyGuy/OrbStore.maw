@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll Tycoon on Orb</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Verdana, sans-serif;
+            background: #1b2838;
+            color: #c7d5e0;
+            font-size: 12px;
+        }
+
+        .header {
+            background: linear-gradient(to bottom, #171a21 0%, #1b2838 100%);
+            padding: 10px 0;
+            border-bottom: 1px solid #000;
+        }
+
+        .header-content {
+            max-width: 940px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            color: #66c0f4;
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav a {
+            color: #b8b6b4;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 11px;
+            padding: 5px 10px;
+        }
+
+        .nav a:hover {
+            color: #fff;
+        }
+
+        .container {
+            max-width: 940px;
+            margin: 20px auto;
+            background: #000;
+        }
+
+        .game-header {
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 100%),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400"><rect fill="%23171a21" width="800" height="400"/><text x="400" y="200" font-size="60" fill="%23ffffff22" text-anchor="middle" font-family="Arial">VYRODIN CHRONICLES</text></svg>');
+            background-size: cover;
+            padding: 30px;
+            border-bottom: 1px solid #000;
+        }
+
+        .game-title {
+            font-size: 32px;
+            color: #fff;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px #000;
+        }
+
+        .game-description {
+            font-size: 13px;
+            color: #8f98a0;
+            max-width: 600px;
+        }
+
+        .content-area {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .left-col {
+            flex: 1;
+        }
+
+        .right-col {
+            width: 300px;
+        }
+
+        .screenshot-area {
+            background: #16202d;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        .main-screenshot {
+            width: 100%;
+            height: 350px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 14px;
+            border: 1px solid #000;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-screenshot::before {
+            content: '';
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, rgba(103, 193, 245, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(40px);
+            top: 40%;
+            left: 25%;
+            transform: translate(-50%, -50%);
+        }
+
+        .main-screenshot::after {
+            content: '';
+            position: absolute;
+            width: 140px;
+            height: 140px;
+            background: radial-gradient(circle, rgba(167, 139, 250, 0.25) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(35px);
+            top: 65%;
+            right: 25%;
+        }
+
+        .thumbnail-strip {
+            display: flex;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .thumbnail {
+            width: 116px;
+            height: 65px;
+            background: #0e1621;
+            border: 1px solid #000;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #555;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .thumbnail::before {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, rgba(100, 150, 200, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(15px);
+        }
+
+        .thumbnail:nth-child(1)::before {
+            background: radial-gradient(circle, rgba(103, 193, 245, 0.3) 0%, transparent 70%);
+            top: 10px;
+            left: 20px;
+        }
+
+        .thumbnail:nth-child(2)::before {
+            background: radial-gradient(circle, rgba(167, 139, 250, 0.3) 0%, transparent 70%);
+            top: 15px;
+            right: 15px;
+        }
+
+        .thumbnail:nth-child(3)::before {
+            background: radial-gradient(circle, rgba(139, 250, 200, 0.3) 0%, transparent 70%);
+            bottom: 10px;
+            left: 30px;
+        }
+
+        .thumbnail:nth-child(4)::before {
+            background: radial-gradient(circle, rgba(250, 200, 139, 0.3) 0%, transparent 70%);
+            top: 20px;
+            left: 40px;
+        }
+
+        .thumbnail:nth-child(5)::before {
+            background: radial-gradient(circle, rgba(200, 139, 250, 0.3) 0%, transparent 70%);
+            bottom: 15px;
+            right: 20px;
+        }
+
+        .thumbnail:hover {
+            border-color: #66c0f4;
+        }
+
+        .about-game {
+            background: #16202d;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .about-game h2 {
+            color: #fff;
+            font-size: 14px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .about-game p {
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .system-requirements {
+            background: #16202d;
+            padding: 15px;
+        }
+
+        .system-requirements h2 {
+            color: #fff;
+            font-size: 14px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .req-tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .req-tab {
+            padding: 5px 15px;
+            background: #1b2838;
+            cursor: pointer;
+            font-size: 11px;
+        }
+
+        .req-tab.active {
+            background: #66c0f4;
+            color: #000;
+        }
+
+        .req-content {
+            font-size: 11px;
+            line-height: 1.8;
+        }
+
+        .req-content strong {
+            color: #fff;
+        }
+
+        .purchase-area {
+            background: #16202d;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .game-logo-small {
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 12px;
+        }
+
+        .price-box {
+            background: #000;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .discount-badge {
+            background: #4c6b22;
+            color: #beee11;
+            padding: 3px 8px;
+            font-size: 18px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .original-price {
+            color: #738895;
+            text-decoration: line-through;
+            font-size: 13px;
+        }
+
+        .final-price {
+            color: #beee11;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .add-to-cart-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(to bottom, #799905 5%, #536904 100%);
+            border: 1px solid #000;
+            color: #d2e885;
+            font-size: 15px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .add-to-cart-btn:hover {
+            background: linear-gradient(to bottom, #8ab806 5%, #799905 100%);
+        }
+
+        .add-to-cart-btn:active {
+            background: #536904;
+        }
+
+        .wishlist-btn {
+            width: 100%;
+            padding: 8px;
+            background: rgba(103, 193, 245, 0.2);
+            border: 1px solid #417a9b;
+            color: #67c1f5;
+            font-size: 12px;
+            cursor: pointer;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .wishlist-btn:hover {
+            background: rgba(103, 193, 245, 0.3);
+        }
+
+        .features-list {
+            margin-top: 15px;
+            font-size: 11px;
+        }
+
+        .feature-item {
+            padding: 5px 0;
+            color: #8f98a0;
+        }
+
+        .feature-item::before {
+            content: "✓ ";
+            color: #67c1f5;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #3d6c8d;
+            border: 1px solid #67c1f5;
+            padding: 15px 20px;
+            color: #fff;
+            font-size: 13px;
+            display: none;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .notification.show {
+            display: block;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="header-content">
+            <a href="orb-store.html" class="logo">ORB</a>
+            <div class="nav">
+                <a href="orb-store.html">Store</a>
+                <a href="#">Community</a>
+                <a href="#">Library</a>
+                <a href="#">Support</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="game-header">
+            <h1 class="game-title">Scroll Tycoon: M.A.W. Empire</h1>
+            <p class="game-description">
+                Build your Arcslate manufacturing empire and dominate the Mass Arcane Web market in this business
+                simulation
+            </p>
+        </div>
+
+        <div class="content-area">
+            <div class="left-col">
+                <div class="screenshot-area">
+                    <div class="main-screenshot"></div>
+                    <div class="thumbnail-strip">
+                        <div class="thumbnail"></div>
+                        <div class="thumbnail"></div>
+                        <div class="thumbnail"></div>
+                        <div class="thumbnail"></div>
+                        <div class="thumbnail"></div>
+                    </div>
+                </div>
+
+                <div class="about-game">
+                    <h2>About This Game</h2>
+                    <p>
+                        The M.A.W. (Mass Arcane Web) has transformed society. What was once a luxury for the wealthy
+                        is now essential—everyone needs an Arcslate to function in modern Ohsa. Messages, banking,
+                        identification, even ration cards are all digital now. And you? You're going to get rich
+                        selling them these devices.
+                    </p>
+                    <p>
+                        Start with a small workshop in the industrial district of Vyrodin. Hire enchanters, source
+                        raw materials, and design your first Scroll model. Will you focus on budget devices for the
+                        masses, or luxury Arcslates for the elite? Maybe you'll corner the black market with
+                        untraceable models that bypass Church surveillance?
+                    </p>
+                    <p>
+                        <strong>Build Your Manufacturing Empire:</strong><br>
+                        Manage every aspect of production—from mining arcane crystals to final assembly. Upgrade
+                        your facilities, research new technologies, and optimize your supply chain. Hire skilled
+                        workers: enchanters to imbue the devices with magic, engineers to design sleeker models,
+                        and salespeople to push your products across all nine districts of Vyrodin.
+                    </p>
+                    <p>
+                        But business isn't just about production. Navigate corporate espionage, bribe Church officials
+                        for lucrative contracts, and sabotage your competitors. The market is cutthroat—literally.
+                        Some rival CEOs have been known to "disappear" after undercutting the wrong people.
+                    </p>
+                    <p>
+                        <strong>Control the M.A.W. Infrastructure:</strong><br>
+                        It's not enough to make Scrolls—you need to control the network itself. Build M.A.W. relay
+                        towers, establish data centers, and create your own apps and services. Charge subscription
+                        fees, sell user data (carefully—the Church watches), and become the backbone of digital life
+                        in Ohsa.
+                    </p>
+                    <p>
+                        <strong>Key Features:</strong><br>
+                        • Design custom Arcslate models with different specs, features, and price points<br>
+                        • Manage complex supply chains across multiple districts with varying regulations<br>
+                        • Research new technologies: longer battery life, better encryption, holographic displays<br>
+                        • Navigate political intrigue—work with or against the Church and underground factions<br>
+                        • Dynamic market simulation where your decisions affect prices and demand<br>
+                        • Expand beyond Vyrodin to other cities in Ohsa<br>
+                        • Sandbox mode: unlimited resources to build your dream tech empire<br>
+                        • Campaign mode: rise from a small workshop to a continental monopoly
+                    </p>
+                </div>
+
+                <div class="system-requirements">
+                    <h2>System Requirements</h2>
+                    <div class="req-tabs">
+                        <div class="req-tab active" onclick="showReqs('min')">MINIMUM</div>
+                        <div class="req-tab" onclick="showReqs('rec')">RECOMMENDED</div>
+                    </div>
+                    <div class="req-content" id="min-reqs">
+                        <strong>OS:</strong> Phantom OS 3 / Specter 2000/XP<br>
+                        <strong>Processor:</strong> Single-Core Runeforge 1200 or equivalent<br>
+                        <strong>Memory:</strong> 256 MB Ethereal RAM<br>
+                        <strong>Graphics:</strong> ManaCore 64 MB or Spellweaver 8 compatible<br>
+                        <strong>Rendering:</strong> ArcX 8.1 or higher<br>
+                        <strong>Storage:</strong> 2 GB available space<br>
+                        <strong>Audio:</strong> Resonance Sound compatible
+                    </div>
+                    <div class="req-content" id="rec-reqs" style="display:none;">
+                        <strong>OS:</strong> Phantom OS 5 / Specter XP/Vista<br>
+                        <strong>Processor:</strong> Dual-Core Runeforge 2400 or Mystic Blade CPU<br>
+                        <strong>Memory:</strong> 512 MB Ethereal RAM<br>
+                        <strong>Graphics:</strong> ManaCore 128 MB or Spellweaver 9 compatible<br>
+                        <strong>Rendering:</strong> ArcX 9.0c or higher<br>
+                        <strong>Storage:</strong> 3 GB available space<br>
+                        <strong>Audio:</strong> Resonance Surround compatible
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-col">
+                <div class="purchase-area">
+                    <div class="game-logo-small">
+                        [Game Logo]
+                    </div>
+
+                    <div class="price-box">
+                        <div class="discount-badge">-75%</div>
+                        <div class="price-row">
+                            <span class="original-price">$39.99</span>
+                            <span class="final-price">$9.99</span>
+                        </div>
+                    </div>
+
+                    <button class="add-to-cart-btn" onclick="addToCart()">
+                        Add to Cart
+                    </button>
+
+                    <button class="wishlist-btn" onclick="addToWishlist()">
+                        Add to Wishlist
+                    </button>
+
+                    <div class="features-list">
+                        <div class="feature-item">Single-player</div>
+                        <div class="feature-item">Orb Achievements</div>
+                        <div class="feature-item">Full Controller Support</div>
+                        <div class="feature-item">Orb Cloud</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+    <script>
+        let cartCount = 0;
+        let wishlistCount = 0;
+
+        function showReqs(type) {
+            document.getElementById('min-reqs').style.display = type === 'min' ? 'block' : 'none';
+            document.getElementById('rec-reqs').style.display = type === 'rec' ? 'block' : 'none';
+
+            document.querySelectorAll('.req-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        function addToCart() {
+            cartCount++;
+            showNotification('✓ Scroll Tycoon has been added to your cart!');
+
+            // Change button text temporarily
+            const btn = document.querySelector('.add-to-cart-btn');
+            const originalText = btn.textContent;
+            btn.textContent = 'Added to Cart!';
+            btn.style.background = '#4c6b22';
+
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = '';
+            }, 2000);
+        }
+
+        function addToWishlist() {
+            wishlistCount++;
+            showNotification('✓ Scroll Tycoon has been added to your wishlist!');
+
+            // Change button text
+            const btn = document.querySelector('.wishlist-btn');
+            btn.textContent = '✓ On Wishlist';
+            btn.style.background = 'rgba(103, 193, 245, 0.4)';
+        }
+    </script>
+</body>
+
+</html>
