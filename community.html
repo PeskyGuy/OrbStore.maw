@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orb Community</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Verdana, sans-serif;
+            background: #1b2838;
+            color: #c7d5e0;
+            font-size: 12px;
+        }
+
+        .header {
+            background: linear-gradient(to bottom, #171a21 0%, #1b2838 100%);
+            padding: 10px 0;
+            border-bottom: 1px solid #000;
+        }
+
+        .header-content {
+            max-width: 940px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            color: #66c0f4;
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav a {
+            color: #b8b6b4;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 11px;
+            padding: 5px 10px;
+        }
+
+        .nav a:hover {
+            color: #fff;
+        }
+
+        .nav a.active {
+            color: #fff;
+            background: #2a475e;
+        }
+
+        .container {
+            max-width: 940px;
+            margin: 20px auto;
+        }
+
+        .page-title {
+            font-size: 28px;
+            color: #fff;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #2a475e;
+        }
+
+        .forum-section {
+            background: #16202d;
+            margin-bottom: 20px;
+            border: 1px solid #000;
+        }
+
+        .section-header {
+            background: #1b2838;
+            padding: 12px 15px;
+            border-bottom: 1px solid #000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-title {
+            color: #66c0f4;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .refresh-btn {
+            background: #2a475e;
+            border: 1px solid #417a9b;
+            color: #67c1f5;
+            padding: 4px 10px;
+            font-size: 10px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .refresh-btn:hover {
+            background: #417a9b;
+        }
+
+        .thread-list {
+            padding: 10px;
+        }
+
+        .thread {
+            display: flex;
+            gap: 15px;
+            padding: 12px;
+            border-bottom: 1px solid #0e1621;
+            transition: background 0.2s;
+        }
+
+        .thread:hover {
+            background: #1b2838;
+        }
+
+        .thread:last-child {
+            border-bottom: none;
+        }
+
+        .thread-icon {
+            width: 40px;
+            height: 40px;
+            background: #0e1621;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .thread-content {
+            flex: 1;
+        }
+
+        .thread-title {
+            color: #67c1f5;
+            font-size: 13px;
+            margin-bottom: 5px;
+            cursor: pointer;
+        }
+
+        .thread-title:hover {
+            color: #fff;
+        }
+
+        .thread-meta {
+            font-size: 10px;
+            color: #8f98a0;
+        }
+
+        .thread-author {
+            color: #67c1f5;
+        }
+
+        .thread-stats {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            font-size: 11px;
+            color: #8f98a0;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 50px;
+        }
+
+        .stat-number {
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .footer {
+            background: #171a21;
+            padding: 20px;
+            text-align: center;
+            color: #8f98a0;
+            font-size: 11px;
+            margin-top: 40px;
+            border-top: 1px solid #000;
+        }
+
+        .hot-badge {
+            background: #d32f2f;
+            color: #fff;
+            padding: 2px 6px;
+            font-size: 9px;
+            border-radius: 2px;
+            margin-left: 5px;
+            font-weight: bold;
+        }
+
+        .new-badge {
+            background: #4c6b22;
+            color: #beee11;
+            padding: 2px 6px;
+            font-size: 9px;
+            border-radius: 2px;
+            margin-left: 5px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">ORB</a>
+            <div class="nav">
+                <a href="index.html">Store</a>
+                <a href="community.html" class="active">Community</a>
+                <a href="#">Library</a>
+                <a href="#">Support</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1 class="page-title">Orb Community Forums</h1>
+
+        <div class="forum-section">
+            <div class="section-header">
+                <div class="section-title">General Gaming Discussion</div>
+                <button class="refresh-btn" onclick="refreshThreads('general')">Refresh</button>
+            </div>
+            <div class="thread-list" id="general-threads"></div>
+        </div>
+
+        <div class="forum-section">
+            <div class="section-header">
+                <div class="section-title">Arcane Tech & Modding</div>
+                <button class="refresh-btn" onclick="refreshThreads('tech')">Refresh</button>
+            </div>
+            <div class="thread-list" id="tech-threads"></div>
+        </div>
+
+        <div class="forum-section">
+            <div class="section-header">
+                <div class="section-title">Competitive & Multiplayer</div>
+                <button class="refresh-btn" onclick="refreshThreads('competitive')">Refresh</button>
+            </div>
+            <div class="thread-list" id="competitive-threads"></div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>© 2005 Orb Digital Distribution. All rights reserved.</p>
+        <p>Powered by ArcX Technology</p>
+    </div>
+
+    <script>
+        const threadData = {
+            general: [
+                { title: "Riftwalker Chronicles just got a massive update!", author: "ShadowMancer92", icon: "🌌", replies: 234, views: 1823 },
+                { title: "Anyone else think Spellforge Simulator is underrated?", author: "CrystalCaster", icon: "💎", replies: 89, views: 456 },
+                { title: "Best couch co-op games for Aethernet parties?", author: "RuneKnight", icon: "🎮", replies: 156, views: 892 },
+                { title: "Phantom Blade 3 announcement HYPE THREAD", author: "VoidWalker88", icon: "⚔️", replies: 567, views: 3421, hot: true },
+                { title: "Why does every RPG need crafting now?", author: "OldSchoolGamer", icon: "🛠️", replies: 312, views: 1654 },
+                { title: "Mystic Realms Online server maintenance again...", author: "FrustratedHealer", icon: "😤", replies: 445, views: 2103 },
+                { title: "Hidden gem alert: Enchanter's Workshop", author: "IndieExplorer", icon: "✨", replies: 67, views: 234, new: true },
+                { title: "Glyphstone Tactics tournament this weekend!", author: "CompetitiveMage", icon: "🏆", replies: 123, views: 678 },
+                { title: "Soulbound Legacy ending was disappointing", author: "StorySeeker", icon: "📖", replies: 289, views: 1456 },
+                { title: "Looking for guild in Astral Conquest", author: "LoneWanderer", icon: "🌟", replies: 34, views: 189 }
+            ],
+            tech: [
+                { title: "How to install custom spell effects in Manaforge Engine", author: "ModWizard", icon: "🔧", replies: 178, views: 1234 },
+                { title: "ArcX 10.0 beta performance issues?", author: "TechSorcerer", icon: "⚡", replies: 423, views: 2567, hot: true },
+                { title: "Created a Runeforge CPU overclock guide", author: "HardwareHex", icon: "💻", replies: 234, views: 1456 },
+                { title: "Ethereal RAM compatibility chart updated", author: "SystemShaman", icon: "🧠", replies: 89, views: 567 },
+                { title: "Scryer 7 Pro vs Phantom OS 6 for gaming?", author: "OSDebater", icon: "🖥️", replies: 345, views: 1987 },
+                { title: "Texture pack for Dimensional Rift - 4K Manacore", author: "GraphicsGuru", icon: "🎨", replies: 156, views: 892, new: true },
+                { title: "Anyone got Spellweaver GTX drivers working?", author: "DriverHunter", icon: "🔍", replies: 267, views: 1345 },
+                { title: "Aethernet latency spikes - ISP or game?", author: "LagWarrior", icon: "📡", replies: 198, views: 1023 },
+                { title: "Modding Chronomancer's Quest - save file editor", author: "SaveScummer", icon: "💾", replies: 112, views: 678 },
+                { title: "Resonance Surround 7.1 setup guide", author: "AudioAlchemist", icon: "🔊", replies: 67, views: 445 }
+            ],
+            competitive: [
+                { title: "Elemental Arena meta is broken right now", author: "ProPlayer_TK", icon: "🔥", replies: 678, views: 4321, hot: true },
+                { title: "Looking for ranked team - Diamond tier", author: "CompetitiveSeeker", icon: "💎", replies: 45, views: 234 },
+                { title: "Spellslinger Showdown tournament bracket predictions", author: "EsportsAnalyst", icon: "📊", replies: 234, views: 1456 },
+                { title: "Nerf the Void Bolt already!", author: "FrustratedRanked", icon: "😠", replies: 892, views: 5234, hot: true },
+                { title: "Best keybinds for Arcane Warfare?", author: "ControlOptimizer", icon: "⌨️", replies: 156, views: 892 },
+                { title: "Clan recruitment: Astral Vanguard [18+]", author: "ClanLeader_AV", icon: "🛡️", replies: 89, views: 567 },
+                { title: "Riftblade Champions patch notes discussion", author: "PatchReader", icon: "📝", replies: 445, views: 2345 },
+                { title: "How to counter Chronomancer in 1v1?", author: "DuelistNoob", icon: "⏰", replies: 234, views: 1234 },
+                { title: "Spectral Siege map tier list", author: "MapAnalyst", icon: "🗺️", replies: 178, views: 987, new: true },
+                { title: "Voice chat etiquette in ranked matches", author: "TeamPlayer", icon: "🎤", replies: 312, views: 1678 }
+            ]
+        };
+
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        function generateThreadHTML(thread) {
+            const badges = [];
+            if (thread.hot) badges.push('<span class="hot-badge">HOT</span>');
+            if (thread.new) badges.push('<span class="new-badge">NEW</span>');
+
+            return `
+                <div class="thread">
+                    <div class="thread-icon">${thread.icon}</div>
+                    <div class="thread-content">
+                        <div class="thread-title">${thread.title}${badges.join('')}</div>
+                        <div class="thread-meta">
+                            Started by <span class="thread-author">${thread.author}</span> • 
+                            ${Math.floor(Math.random() * 24) + 1}h ago
+                        </div>
+                    </div>
+                    <div class="thread-stats">
+                        <div class="stat">
+                            <span class="stat-number">${thread.replies}</span>
+                            <span>Replies</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">${thread.views}</span>
+                            <span>Views</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function refreshThreads(category) {
+            const container = document.getElementById(`${category}-threads`);
+            const shuffled = shuffleArray(threadData[category]);
+            const selected = shuffled.slice(0, 5);
+            
+            container.style.opacity = '0.5';
+            
+            setTimeout(() => {
+                container.innerHTML = selected.map(thread => generateThreadHTML(thread)).join('');
+                container.style.opacity = '1';
+            }, 300);
+        }
+
+        // Initialize all sections
+        refreshThreads('general');
+        refreshThreads('tech');
+        refreshThreads('competitive');
+    </script>
+</body>
+
+</html>
