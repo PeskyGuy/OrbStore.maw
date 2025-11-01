@@ -352,8 +352,8 @@
             const shuffled = shuffleArray(threadData[category]);
             let selected = shuffled.slice(0, 5);
             
-            // 5% chance to add the secret thread to general category
-            if (category === 'general' && Math.random() < 0.05) {
+            // 15% chance to add the secret thread to general category
+            if (category === 'general' && Math.random() < 0.15) {
                 const secretThread = {
                     title: "Has anyone found the hidden easter egg in Riftwalker Chronicles?",
                     author: "ElijahTheSeeker",
@@ -385,3 +385,4 @@
 </body>
 
 </html>
+
