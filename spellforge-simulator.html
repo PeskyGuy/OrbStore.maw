@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spellforge Simulator on Orb</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:"Trebuchet MS",Verdana,Arial,sans-serif; background:#e8e0d0; color:#333; font-size:12px; }
+        a { color:#0066cc; } a:visited { color:#660099; } a:hover { color:#cc3300; }
+
+        .header { background:linear-gradient(to bottom,#447799,#2a4d6e); border-bottom:3px solid #1a3050; }
+        .header-top { max-width:780px; margin:0 auto; display:flex; align-items:center; padding:8px 10px; gap:12px; }
+        .logo, .logo:visited { font-size:28px; font-weight:bold; color:#aaccee; text-decoration:none; text-shadow:1px 1px 2px rgba(0,0,0,0.5); font-family:"Impact","Arial Black",sans-serif; letter-spacing:2px; }
+        .logo-sub { font-size:9px; color:#aaccee; display:block; letter-spacing:0; font-family:Verdana,sans-serif; font-weight:normal; }
+        .nav-bar { background:#1a3050; border-bottom:1px solid #0e1e30; }
+        .nav { max-width:780px; margin:0 auto; display:flex; gap:0; padding:0 10px; }
+        .nav a { color:#99bbdd; text-decoration:none; font-size:11px; padding:6px 14px; display:block; border-right:1px solid #2a4d6e; }
+        .nav a:first-child { border-left:1px solid #2a4d6e; }
+        .nav a:hover { background:#2a4d6e; color:#fff; }
+
+        .container { max-width:780px; margin:0 auto; padding:12px 10px; }
+        .breadcrumb { font-size:10px; color:#666; margin-bottom:10px; }
+        .breadcrumb a { font-size:10px; }
+
+        .game-header { background:#fff; border:1px solid #999; margin-bottom:12px; }
+        .game-banner { background:#2a2a2a; padding:20px 16px; position:relative; overflow:hidden; }
+        .game-banner::before { content:''; position:absolute; width:200px; height:200px; border-radius:50%; background:radial-gradient(circle,rgba(200,100,250,0.2),transparent 70%); filter:blur(40px); top:20%; left:20%; }
+        .game-banner::after { content:''; position:absolute; width:150px; height:150px; border-radius:50%; background:radial-gradient(circle,rgba(200,100,250,0.2),transparent 70%); filter:blur(35px); bottom:10%; right:20%; }
+        .game-banner h1 { font-size:24px; color:#fff; text-shadow:2px 2px 4px rgba(0,0,0,0.6); position:relative; z-index:1; }
+        .game-banner p { font-size:12px; color:rgba(255,255,255,0.8); margin-top:6px; position:relative; z-index:1; }
+
+        .main-layout { display:flex; gap:12px; }
+        .main-content { flex:1; min-width:0; }
+        .sidebar { width:220px; flex-shrink:0; }
+
+        .content-box { background:#fff; border:1px solid #999; margin-bottom:10px; }
+        .content-box h2 { background:linear-gradient(to bottom,#447799,#2a4d6e); color:#fff; padding:5px 10px; font-size:12px; text-shadow:1px 1px 1px rgba(0,0,0,0.3); border-bottom:1px solid #1a3050; }
+        .content-box .inner { padding:10px 12px; font-size:11px; line-height:1.7; }
+        .content-box .inner p { margin-bottom:8px; }
+        .content-box .inner strong { color:#222; }
+
+        .screenshot-placeholder { background:#2a2a2a; height:180px; margin:0; display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.3); font-size:13px; position:relative; overflow:hidden; }
+        .screenshot-placeholder::before { content:''; position:absolute; width:160px; height:160px; border-radius:50%; background:radial-gradient(circle,rgba(200,100,250,0.2),transparent 70%); filter:blur(35px); top:30%; left:25%; }
+        .thumb-strip { display:flex; gap:2px; background:#ddd; }
+        .thumb { flex:1; height:40px; background:#2a2a2a; opacity:0.7; cursor:pointer; position:relative; overflow:hidden; }
+        .thumb:hover { opacity:1; }
+        .thumb::before { content:''; position:absolute; width:30px; height:30px; border-radius:50%; background:radial-gradient(circle,rgba(200,100,250,0.2),transparent 70%); filter:blur(10px); top:5px; left:20%; }
+
+        .purchase-box { background:#fff; border:1px solid #999; margin-bottom:10px; }
+        .purchase-box h3 { background:linear-gradient(to bottom,#447799,#2a4d6e); color:#fff; padding:5px 10px; font-size:11px; text-shadow:1px 1px 1px rgba(0,0,0,0.3); border-bottom:1px solid #1a3050; }
+        .purchase-inner { padding:10px; text-align:center; }
+        .price-display { margin:8px 0; }
+        .final-price { font-size:20px; font-weight:bold; color:#cc0000; }
+        .buy-btn { display:block; width:100%; padding:8px; background:linear-gradient(to bottom,#447799,#2a4d6e); border:2px outset #5588aa; color:#fff; font-size:13px; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px; }
+        .buy-btn:hover { background:linear-gradient(to bottom,#5588aa,#3a5d7e); }
+        .buy-btn:active { border-style:inset; }
+        .wishlist-btn { display:block; width:100%; padding:6px; background:#e8e0d0; border:1px solid #999; color:#333; font-size:11px; cursor:pointer; font-family:inherit; margin-top:4px; }
+        .wishlist-btn:hover { background:#d0c8b8; }
+
+        .features-list { padding:8px 10px; font-size:10px; }
+        .features-list div { padding:2px 0; color:#333; border-bottom:1px dotted #ddd; }
+        .features-list div::before { content:"✓ "; color:#006600; font-weight:bold; }
+        .features-list div:last-child { border-bottom:none; }
+
+        .genre-tags { padding:8px 10px; display:flex; flex-wrap:wrap; gap:4px; }
+        .genre-tag { background:#ddd; color:#444; font-size:9px; padding:2px 6px; border:1px solid #bbb; }
+
+        .sidebar-box { background:#fff; border:1px solid #999; margin-bottom:10px; }
+        .sidebar-box h3 { background:linear-gradient(to bottom,#e8e0d0,#d0c8b8); color:#333; padding:4px 8px; font-size:10px; border-bottom:1px solid #999; }
+        .sidebar-box .sb-inner { padding:6px 8px; font-size:10px; line-height:1.6; }
+        .sidebar-box .sb-inner strong { color:#222; }
+
+        .dev-note { font-size:9px; color:#888; text-align:center; padding:4px; border-top:1px dotted #ccc; margin-top:4px; }
+
+        .footer { background:#2a4d6e; color:#99bbdd; text-align:center; padding:12px; font-size:10px; border-top:3px solid #1a3050; margin-top:16px; }
+        .footer a { color:#aaccee; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-top">
+            <a href="index.html" class="logo">ORB<span class="logo-sub">Digital Distribution Platform</span></a>
+        </div>
+    </div>
+    <div class="nav-bar">
+        <div class="nav">
+            <a href="index.html">Store</a>
+            <a href="community.html">Community</a>
+            <a href="library.html">Library</a>
+            <a href="support.html">Support</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="breadcrumb"><a href="index.html">Store</a> &raquo; Spellforge Simulator</div>
+
+        <div class="game-header">
+            <div class="game-banner">
+                <h1>Spellforge Simulator</h1>
+                <p>The deepest magical crafting simulation ever created.</p>
+            </div>
+        </div>
+
+        <div class="main-layout">
+            <div class="main-content">
+                <div class="screenshot-placeholder">[Screenshot Area]</div>
+                <div class="thumb-strip">
+                    <div class="thumb"></div><div class="thumb"></div><div class="thumb"></div><div class="thumb"></div><div class="thumb"></div>
+                </div>
+
+                <div class="content-box">
+                    <h2>About This Game</h2>
+                    <div class="inner">
+                        <p>Welcome to the Forge. Spellforge Simulator is a detailed physics-based crafting game where you design every aspect of a spell — from its elemental core to its delivery mechanism.</p>
+                        <p><strong>Infinite Possibilities:</strong><br>Mix ingredients, shape runes, and test your creations in the safety of your workshop. Will your fireball be a concentrated beam or a massive explosion? The choice is yours.</p>
+                        <p><strong>Key Features:</strong><br>
+                        • Realistic mana-flow physics engine<br>
+                        • Hundreds of ingredients with unique magical properties<br>
+                        • Modular spell design system<br>
+                        • Workshop customization and upgrades<br>
+                        • Share your spell blueprints with the community</p>
+                    </div>
+                </div>
+
+                <div class="content-box">
+                    <h2>System Requirements (Arcslate/PG)</h2>
+                    <div class="inner">
+                        <strong>Minimum:</strong><br>
+                        OS: Phantom OS 3 / Scryer 5<br>
+                        Processor: Runeforge CPU 1.5 GHz<br>
+                        Memory: 512 MB Ethereal RAM<br>
+                        Graphics: Spellweaver 8 / ManaCore 64 MB<br>
+                        Rendering: ArcX 8.1+<br>
+                        Storage: 3 GB available
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="purchase-box">
+                    <h3>Purchase</h3>
+                    <div class="purchase-inner">
+                        <div class="price-display">
+                            <span class="final-price">8 ut</span>
+                        </div>
+                        <button class="buy-btn" onclick="this.textContent='✓ Added to Cart!';this.style.background='#336633';">Add to Cart</button>
+                        <button class="wishlist-btn" onclick="this.textContent='✓ On Wishlist';">♡ Add to Wishlist</button>
+                    </div>
+                    <div class="genre-tags">
+                        <span class="genre-tag">Simulation</span><span class="genre-tag">Crafting</span><span class="genre-tag">Magical</span>
+                    </div>
+                    <div class="features-list">
+                        <div>Single-player</div><div>Steam Workshop (Orb Support)</div><div>Tutorials</div>
+                    </div>
+                    <div class="dev-note">Developed by ForgeLight Studios · Published 2004 A.U.</div>
+                </div>
+
+                <div class="sidebar-box">
+                    <h3>Related Games</h3>
+                    <div class="sb-inner">
+                        <a href="index.html">← Browse all games</a><br>
+                        <a href="community.html">Community Forums</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2005 A.U. Orb Digital Distribution &middot; <a href="about.html">About Us</a> &middot; <a href="support.html">Support</a></p>
+        <p><a href="index.html">Store</a> &middot; <a href="community.html">Forums</a> &middot; <a href="support.html">Support</a></p>
+    </div>
+</body>
+</html>

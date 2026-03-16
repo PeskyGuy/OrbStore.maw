@@ -1,617 +1,185 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Magus and Tekks on Orb</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:"Trebuchet MS",Verdana,Arial,sans-serif; background:#e8e0d0; color:#333; font-size:12px; }
+        a { color:#0066cc; } a:visited { color:#660099; } a:hover { color:#cc3300; }
 
-        body {
-            font-family: Arial, Verdana, sans-serif;
-            background: #1b2838;
-            color: #c7d5e0;
-            font-size: 12px;
-        }
+        .header { background:linear-gradient(to bottom,#447799,#2a4d6e); border-bottom:3px solid #1a3050; }
+        .header-top { max-width:780px; margin:0 auto; display:flex; align-items:center; padding:8px 10px; gap:12px; }
+        .logo, .logo:visited { font-size:28px; font-weight:bold; color:#aaccee; text-decoration:none; text-shadow:1px 1px 2px rgba(0,0,0,0.5); font-family:"Impact","Arial Black",sans-serif; letter-spacing:2px; }
+        .logo-sub { font-size:9px; color:#aaccee; display:block; letter-spacing:0; font-family:Verdana,sans-serif; font-weight:normal; }
+        .nav-bar { background:#1a3050; border-bottom:1px solid #0e1e30; }
+        .nav { max-width:780px; margin:0 auto; display:flex; gap:0; padding:0 10px; }
+        .nav a { color:#99bbdd; text-decoration:none; font-size:11px; padding:6px 14px; display:block; border-right:1px solid #2a4d6e; }
+        .nav a:first-child { border-left:1px solid #2a4d6e; }
+        .nav a:hover { background:#2a4d6e; color:#fff; }
 
-        .header {
-            background: linear-gradient(to bottom, #171a21 0%, #1b2838 100%);
-            padding: 10px 0;
-            border-bottom: 1px solid #000;
-        }
+        .container { max-width:780px; margin:0 auto; padding:12px 10px; }
+        .breadcrumb { font-size:10px; color:#666; margin-bottom:10px; }
+        .breadcrumb a { font-size:10px; }
 
-        .header-content {
-            max-width: 940px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
+        .game-header { background:#fff; border:1px solid #999; margin-bottom:12px; }
+        .game-banner { background:linear-gradient(135deg,#c62828,#1565c0); padding:20px 16px; position:relative; overflow:hidden; }
+        .game-banner h1 { font-size:24px; color:#fff; text-shadow:2px 2px 4px rgba(0,0,0,0.6); position:relative; z-index:1; }
+        .game-banner p { font-size:12px; color:rgba(255,255,255,0.8); margin-top:6px; position:relative; z-index:1; }
 
-        .logo {
-            color: #66c0f4;
-            font-size: 24px;
-            font-weight: bold;
-            text-decoration: none;
-        }
+        .main-layout { display:flex; gap:12px; }
+        .main-content { flex:1; min-width:0; }
+        .sidebar { width:220px; flex-shrink:0; }
 
-        .nav {
-            display: flex;
-            gap: 15px;
-        }
+        .content-box { background:#fff; border:1px solid #999; margin-bottom:10px; }
+        .content-box h2 { background:linear-gradient(to bottom,#447799,#2a4d6e); color:#fff; padding:5px 10px; font-size:12px; text-shadow:1px 1px 1px rgba(0,0,0,0.3); border-bottom:1px solid #1a3050; }
+        .content-box .inner { padding:10px 12px; font-size:11px; line-height:1.7; }
+        .content-box .inner p { margin-bottom:8px; }
+        .content-box .inner strong { color:#222; }
 
-        .nav a {
-            color: #b8b6b4;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-size: 11px;
-            padding: 5px 10px;
-        }
+        .screenshot-placeholder { background:#333; height:180px; margin:0; display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.3); font-size:13px; position:relative; overflow:hidden; }
+        .thumb-strip { display:flex; gap:2px; background:#ddd; }
+        .thumb { flex:1; height:40px; background:#444; opacity:0.7; cursor:pointer; }
+        .thumb:hover { opacity:1; }
 
-        .nav a:hover {
-            color: #fff;
-        }
+        .purchase-box { background:#fff; border:1px solid #999; margin-bottom:10px; }
+        .purchase-box h3 { background:linear-gradient(to bottom,#447799,#2a4d6e); color:#fff; padding:5px 10px; font-size:11px; text-shadow:1px 1px 1px rgba(0,0,0,0.3); border-bottom:1px solid #1a3050; }
+        .purchase-inner { padding:10px; text-align:center; }
+        .discount-badge { display:inline-block; background:#cc3300; color:#fff; font-size:18px; font-weight:bold; padding:2px 10px; margin-bottom:6px; }
+        .price-display { margin:8px 0; }
+        .orig-price { text-decoration:line-through; color:#888; font-size:11px; margin-right:6px; }
+        .final-price { font-size:20px; font-weight:bold; color:#cc0000; }
+        .buy-btn { display:block; width:100%; padding:8px; background:linear-gradient(to bottom,#447799,#2a4d6e); border:2px outset #5588aa; color:#fff; font-size:13px; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px; }
+        .buy-btn:hover { background:linear-gradient(to bottom,#5588aa,#3a5d7e); }
+        .buy-btn:active { border-style:inset; }
+        .wishlist-btn { display:block; width:100%; padding:6px; background:#e8e0d0; border:1px solid #999; color:#333; font-size:11px; cursor:pointer; font-family:inherit; margin-top:4px; }
+        .wishlist-btn:hover { background:#d0c8b8; }
 
-        .container {
-            max-width: 940px;
-            margin: 20px auto;
-            background: #000;
-        }
+        .features-list { padding:8px 10px; font-size:10px; }
+        .features-list div { padding:2px 0; color:#333; border-bottom:1px dotted #ddd; }
+        .features-list div::before { content:"✓ "; color:#006600; font-weight:bold; }
+        .features-list div:last-child { border-bottom:none; }
 
-        .game-header {
-            background: linear-gradient(to right, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 100%),
-                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400"><rect fill="%23171a21" width="800" height="400"/><text x="400" y="200" font-size="60" fill="%23ff4444" text-anchor="middle" font-family="Arial">MAGUS AND TEKKS</text></svg>');
-            background-size: cover;
-            padding: 30px;
-            border-bottom: 1px solid #000;
-        }
+        .genre-tags { padding:8px 10px; display:flex; flex-wrap:wrap; gap:4px; }
+        .genre-tag { background:#ddd; color:#444; font-size:9px; padding:2px 6px; border:1px solid #bbb; }
 
-        .game-title {
-            font-size: 32px;
-            color: #fff;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px #000;
-        }
+        .sidebar-box { background:#fff; border:1px solid #999; margin-bottom:10px; }
+        .sidebar-box h3 { background:linear-gradient(to bottom,#e8e0d0,#d0c8b8); color:#333; padding:4px 8px; font-size:10px; border-bottom:1px solid #999; }
+        .sidebar-box .sb-inner { padding:6px 8px; font-size:10px; line-height:1.6; }
+        .sidebar-box .sb-inner strong { color:#222; }
 
-        .game-description {
-            font-size: 13px;
-            color: #8f98a0;
-            max-width: 600px;
-        }
+        .dev-note { font-size:9px; color:#888; text-align:center; padding:4px; border-top:1px dotted #ccc; margin-top:4px; }
 
-        .content-area {
-            display: flex;
-            gap: 20px;
-            padding: 20px;
-        }
-
-        .left-col {
-            flex: 1;
-        }
-
-        .right-col {
-            width: 300px;
-        }
-
-        .screenshot-area {
-            background: #16202d;
-            padding: 10px;
-            margin-bottom: 20px;
-        }
-
-        .main-screenshot {
-            width: 100%;
-            height: 350px;
-            background: linear-gradient(135deg, #2e1a1a 0%, #1e1616 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #666;
-            font-size: 14px;
-            border: 1px solid #000;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .main-screenshot::before {
-            content: '';
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(255, 68, 68, 0.3) 0%, transparent 70%);
-            border-radius: 50%;
-            filter: blur(40px);
-            top: 50%;
-            left: 30%;
-            transform: translate(-50%, -50%);
-        }
-        
-        .main-screenshot::after {
-            content: '';
-            position: absolute;
-            width: 150px;
-            height: 150px;
-            background: radial-gradient(circle, rgba(255, 150, 50, 0.25) 0%, transparent 70%);
-            border-radius: 50%;
-            filter: blur(35px);
-            top: 60%;
-            right: 20%;
-        }
-
-        .thumbnail-strip {
-            display: flex;
-            gap: 5px;
-            margin-top: 10px;
-        }
-
-        .thumbnail {
-            width: 116px;
-            height: 65px;
-            background: #0e1621;
-            border: 1px solid #000;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            color: #555;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .thumbnail::before {
-            content: '';
-            position: absolute;
-            width: 60px;
-            height: 60px;
-            background: radial-gradient(circle, rgba(100, 150, 200, 0.3) 0%, transparent 70%);
-            border-radius: 50%;
-            filter: blur(15px);
-        }
-        
-        .thumbnail:nth-child(1)::before {
-            background: radial-gradient(circle, rgba(255, 100, 100, 0.3) 0%, transparent 70%);
-            top: 10px;
-            left: 20px;
-        }
-        
-        .thumbnail:nth-child(2)::before {
-            background: radial-gradient(circle, rgba(100, 255, 100, 0.3) 0%, transparent 70%);
-            top: 15px;
-            right: 15px;
-        }
-        
-        .thumbnail:nth-child(3)::before {
-            background: radial-gradient(circle, rgba(100, 100, 255, 0.3) 0%, transparent 70%);
-            bottom: 10px;
-            left: 30px;
-        }
-        
-        .thumbnail:nth-child(4)::before {
-            background: radial-gradient(circle, rgba(255, 255, 100, 0.3) 0%, transparent 70%);
-            top: 20px;
-            left: 40px;
-        }
-        
-        .thumbnail:nth-child(5)::before {
-            background: radial-gradient(circle, rgba(255, 100, 255, 0.3) 0%, transparent 70%);
-            bottom: 15px;
-            right: 20px;
-        }
-
-        .thumbnail:hover {
-            border-color: #66c0f4;
-        }
-
-        .about-game {
-            background: #16202d;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-
-        .about-game h2 {
-            color: #fff;
-            font-size: 14px;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .about-game p {
-            line-height: 1.6;
-            margin-bottom: 10px;
-        }
-
-        .system-requirements {
-            background: #16202d;
-            padding: 15px;
-        }
-
-        .system-requirements h2 {
-            color: #fff;
-            font-size: 14px;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .req-tabs {
-            display: flex;
-            gap: 5px;
-            margin-bottom: 10px;
-        }
-
-        .req-tab {
-            padding: 5px 15px;
-            background: #1b2838;
-            cursor: pointer;
-            font-size: 11px;
-        }
-
-        .req-tab.active {
-            background: #66c0f4;
-            color: #000;
-        }
-
-        .req-content {
-            font-size: 11px;
-            line-height: 1.8;
-        }
-
-        .req-content strong {
-            color: #fff;
-        }
-
-        .purchase-area {
-            background: #16202d;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-
-        .game-logo-small {
-            width: 100%;
-            height: 150px;
-            background: linear-gradient(135deg, #2e1a1a 0%, #1e1616 100%);
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #666;
-            font-size: 12px;
-        }
-
-        .price-box {
-            background: #000;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-
-        .discount-badge {
-            background: #4c6b22;
-            color: #beee11;
-            padding: 3px 8px;
-            font-size: 18px;
-            font-weight: bold;
-            display: inline-block;
-            margin-bottom: 10px;
-        }
-
-        .price-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .original-price {
-            color: #738895;
-            text-decoration: line-through;
-            font-size: 13px;
-        }
-
-        .final-price {
-            color: #beee11;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .add-to-cart-btn {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(to bottom, #799905 5%, #536904 100%);
-            border: 1px solid #000;
-            color: #d2e885;
-            font-size: 15px;
-            cursor: pointer;
-            text-align: center;
-            font-weight: bold;
-        }
-
-        .add-to-cart-btn:hover {
-            background: linear-gradient(to bottom, #8ab806 5%, #799905 100%);
-        }
-
-        .add-to-cart-btn:active {
-            background: #536904;
-        }
-
-        .wishlist-btn {
-            width: 100%;
-            padding: 8px;
-            background: rgba(103, 193, 245, 0.2);
-            border: 1px solid #417a9b;
-            color: #67c1f5;
-            font-size: 12px;
-            cursor: pointer;
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        .wishlist-btn:hover {
-            background: rgba(103, 193, 245, 0.3);
-        }
-
-        .features-list {
-            margin-top: 15px;
-            font-size: 11px;
-        }
-
-        .feature-item {
-            padding: 5px 0;
-            color: #8f98a0;
-        }
-
-        .feature-item::before {
-            content: "✓ ";
-            color: #67c1f5;
-        }
-
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #3d6c8d;
-            border: 1px solid #67c1f5;
-            padding: 15px 20px;
-            color: #fff;
-            font-size: 13px;
-            display: none;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-        }
-
-        .notification.show {
-            display: block;
-            animation: slideIn 0.3s ease-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(400px);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        .mature-warning {
-            background: #8b0000;
-            border: 2px solid #ff0000;
-            padding: 10px;
-            margin-bottom: 15px;
-            text-align: center;
-            color: #fff;
-            font-weight: bold;
-        }
+        .footer { background:#2a4d6e; color:#99bbdd; text-align:center; padding:12px; font-size:10px; border-top:3px solid #1a3050; margin-top:16px; }
+        .footer a { color:#aaccee; }
     </style>
 </head>
-
 <body>
     <div class="header">
-        <div class="header-content">
-            <a href="index.html" class="logo">ORB</a>
-            <div class="nav">
-                <a href="index.html">Store</a>
-                <a href="community.html">Community</a>
-                <a href="#">Library</a>
-                <a href="#">Support</a>
-            </div>
+        <div class="header-top">
+            <a href="index.html" class="logo">ORB<span class="logo-sub">Digital Distribution Platform</span></a>
+        </div>
+    </div>
+    <div class="nav-bar">
+        <div class="nav">
+            <a href="index.html">Store</a>
+            <a href="community.html">Community</a>
+            <a href="library.html">Library</a>
+            <a href="support.html">Support</a>
         </div>
     </div>
 
     <div class="container">
+        <div class="breadcrumb"><a href="index.html">Store</a> &raquo; Magus and Tekks</div>
+
         <div class="game-header">
-            <h1 class="game-title">Magus and Tekks</h1>
-            <p class="game-description">
-                Intense tactical FPS combat where magic meets military technology in a war-torn world
-            </p>
+            <div class="game-banner">
+                <h1>Magus and Tekks</h1>
+                <p>Tactical Combat — Clash of ideologies between the Church of Embrace and the Industrialists.</p>
+            </div>
         </div>
 
-        <div class="content-area">
-            <div class="left-col">
-                <div class="screenshot-area">
-                    <div class="main-screenshot"></div>
-                    <div class="thumbnail-strip">
-                        <div class="thumbnail"></div>
-                        <div class="thumbnail"></div>
-                        <div class="thumbnail"></div>
-                        <div class="thumbnail"></div>
-                        <div class="thumbnail"></div>
+        <div class="main-layout">
+            <div class="main-content">
+                <div class="content-box">
+                    <div class="screenshot-placeholder">[Screenshot Area: Magic vs Tech]</div>
+                    <div class="thumb-strip">
+                        <div class="thumb"></div><div class="thumb"></div><div class="thumb"></div><div class="thumb"></div><div class="thumb"></div>
                     </div>
                 </div>
 
-                <div class="about-game">
+                <div class="content-box">
                     <h2>About This Game</h2>
-                    <div class="mature-warning">
-                        MATURE CONTENT - Contains intense violence, blood, and strong language
+                    <div class="inner">
+                        <p>The Civil Centennial War may have ended, but the conflict between tradition and progress still burns in the heart of Vyrodin. On one side, the Church of Embrace wields ancient magic and calls upon divine protection. On the other, the Industrialist Union builds massive steam-powered golems and utilizes the latest in Tekk engineering.</p>
+                        <p>Take command of a strike team and navigate the dangerous streets of the Free District. Will you join the Church to preserve the sacred balance of Ohsa, or will you stand with the Union to build a future free from divine interference?</p>
+                        <p><strong>Tactical Combat & Strategy:</strong><br>Every move counts. Use the environment to your advantage — find cover in industrial ruins or utilize ley lines to boost your magical abilities. Combine the strengths of different units to overcome overwhelming odds in deep, turn-based tactical battles.</p>
+                        <p><strong>Key Features:</strong><br>
+                        • Choose between magic-focused Church units or technology-focused Union units<br>
+                        • Dynamic battlefield environment with destructible cover and environmental hazards<br>
+                        • Deep unit customization: upgrade equipment, learn new abilities, and specialize your team<br>
+                        • Narrative-rich campaign mode spanning Vyrodin's history and the roots of the ideology clash<br>
+                        • Local and online multiplayer support for competitive tactical play</p>
                     </div>
-                    <p>
-                        The streets have become a battlefield. Rogue mages clash with military enforcers
-                        equipped with anti-magic technology. You are an elite operative caught in the crossfire,
-                        wielding both arcane spells and cutting-edge weaponry to survive.
-                    </p>
-                    <p>
-                        <strong>Fully Fledged Campaign - 10 Chapters:</strong><br>
-                        Experience an epic story spanning multiple war-torn cities. From gleaming corporate
-                        districts to lawless slums, each chapter takes you deeper into the conspiracy
-                        that threatens global stability. Uncover the truth behind a shadowy organization
-                        while fighting for survival against impossible odds.
-                    </p>
-                    <p>
-                        <strong>Dual Combat System:</strong><br>
-                        Master both magical and technological warfare. Cast devastating spells with your left hand
-                        while firing high-tech weapons with your right. Combine fireballs with grenades, use
-                        telekinesis to throw enemies into your line of fire, or cloak yourself with illusion magic
-                        while flanking with a plasma rifle.
-                    </p>
-                    <p>
-                        Choose your loadout before each mission: Evocation magic for raw damage, Transmutation for
-                        defensive barriers, or Divination to see enemies through walls. Pair these with assault
-                        rifles, sniper rifles, shotguns, or experimental arcane-tech hybrid weapons.
-                    </p>
-                    <p>
-                        <strong>Multiplayer Mayhem:</strong><br>
-                        Take the fight online with up to 16 players. Team Deathmatch, Capture the Relic, and
-                        Siege modes across 12 diverse maps ranging from urban battlegrounds to mystical ruins.
-                        Customize your operative with hundreds of spell and weapon combinations.
-                    </p>
-                    <p>
-                        <strong>Key Features:</strong><br>
-                        • 10-chapter campaign with branching storylines and multiple endings<br>
-                        • Hybrid magic/tech combat system with 50+ spells and 30+ weapons<br>
-                        • Advanced AI that adapts to your playstyle<br>
-                        • Competitive multiplayer with ranked matchmaking<br>
-                        • Co-op mode: play the entire campaign with a friend<br>
-                        • Extensive character customization and progression system<br>
-                        • Dynamic destruction: blast through walls and create your own paths<br>
-                        • Powered by ArcX Engine for stunning visuals and smooth performance
-                    </p>
                 </div>
 
-                <div class="system-requirements">
-                    <h2>System Requirements</h2>
-                    <div class="req-tabs">
-                        <div class="req-tab active" onclick="showReqs('min')">MINIMUM</div>
-                        <div class="req-tab" onclick="showReqs('rec')">RECOMMENDED</div>
-                    </div>
-                    <div class="req-content" id="min-reqs">
-                        <strong>OS:</strong> Phantom OS 5 or Specter XP<br>
-                        <strong>Processor:</strong> Dual-Core Runeforge 2400 or equivalent<br>
-                        <strong>Memory:</strong> 512 MB Ethereal RAM<br>
-                        <strong>Graphics:</strong> ManaCore 128 MB or Spellweaver GX compatible<br>
-                        <strong>Rendering:</strong> ArcX 9.0c or higher<br>
-                        <strong>Network:</strong> Aethernet broadband connection<br>
-                        <strong>Storage:</strong> 4 GB available space<br>
-                        <strong>Audio:</strong> Resonance Sound compatible<br>
-                        <strong>Additional:</strong> ArcX Software 2.1 or higher, Scryer 7 required
-                    </div>
-                    <div class="req-content" id="rec-reqs" style="display:none;">
-                        <strong>OS:</strong> Phantom OS 6 / Specter Vista<br>
-                        <strong>Processor:</strong> Quad-Core Runeforge 3000 or Mystic Blade CPU<br>
-                        <strong>Memory:</strong> 1 GB Ethereal RAM<br>
-                        <strong>Graphics:</strong> ManaCore 256 MB or Spellweaver GTX<br>
-                        <strong>Rendering:</strong> ArcX 9.0c or higher<br>
-                        <strong>Network:</strong> High-speed Aethernet connection<br>
-                        <strong>Storage:</strong> 6 GB available space<br>
-                        <strong>Audio:</strong> 5.1 Resonance Surround compatible<br>
-                        <strong>Additional:</strong> ArcX Software 3.0 or higher, Scryer 7 Pro recommended
+                <div class="content-box">
+                    <h2>System Requirements (Arcslate/PG)</h2>
+                    <div class="inner">
+                        <strong>Minimum:</strong><br>
+                        OS: Phantom OS 4 / Scryer 6<br>
+                        Processor: Single-Core Runeforge 1.8 GHz<br>
+                        Memory: 1 GB Ethereal RAM<br>
+                        Graphics: Spellweaver 256MB / ManaCore 128MB compatible<br>
+                        Rendering: ArcX 10.1 or higher<br>
+                        Storage: 4 GB available space<br><br>
+                        <strong>Recommended:</strong><br>
+                        OS: Phantom OS 6 / Scryer 7<br>
+                        Processor: Dual-Core Runeforge 2.4 GHz<br>
+                        Memory: 2 GB Ethereal RAM<br>
+                        Graphics: Spellweaver 512MB / ManaCore 256MB compatible<br>
+                        Rendering: ArcX 11 or higher<br>
+                        Storage: 6 GB available
                     </div>
                 </div>
             </div>
 
-            <div class="right-col">
-                <div class="purchase-area">
-                    <div class="game-logo-small">
-                        [Game Logo]
-                    </div>
-
-                    <div class="price-box">
+            <div class="sidebar">
+                <div class="purchase-box">
+                    <h3>Purchase</h3>
+                    <div class="purchase-inner">
                         <div class="discount-badge">-50%</div>
-                        <div class="price-row">
-                            <span class="original-price">$49.99</span>
-                            <span class="final-price">$24.99</span>
+                        <div class="price-display">
+                            <span class="orig-price">2 um 4 ut</span>
+                            <span class="final-price">1 um 2 ut</span>
                         </div>
+                        <button class="buy-btn" onclick="this.textContent='✓ Added to Cart!';this.style.background='#336633';">Add to Cart</button>
+                        <button class="wishlist-btn" onclick="this.textContent='✓ On Wishlist';">♡ Add to Wishlist</button>
                     </div>
-
-                    <button class="add-to-cart-btn" onclick="addToCart()">
-                        Add to Cart
-                    </button>
-
-                    <button class="wishlist-btn" onclick="addToWishlist()">
-                        Add to Wishlist
-                    </button>
-
+                    <div class="genre-tags">
+                        <span class="genre-tag">Tactical</span><span class="genre-tag">Action</span><span class="genre-tag">Strategy</span>
+                    </div>
                     <div class="features-list">
-                        <div class="feature-item">Single-player</div>
-                        <div class="feature-item">Multi-player</div>
-                        <div class="feature-item">Co-op</div>
-                        <div class="feature-item">Orb Achievements</div>
-                        <div class="feature-item">Full Controller Support</div>
-                        <div class="feature-item">Orb Cloud</div>
-                        <div class="feature-item">Voice Chat</div>
+                        <div>Single-player</div><div>Multiplayer</div><div>Orb Achievements</div><div>Orb Cloud</div>
+                    </div>
+                    <div class="dev-note">Developed by Steel Spirit Games · Published 2004 A.U.</div>
+                </div>
+
+                <div class="sidebar-box">
+                    <h3>Related Games</h3>
+                    <div class="sb-inner">
+                        <a href="index.html">← Browse all games</a><br>
+                        <a href="community.html">Community Forums</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="notification" id="notification"></div>
-
-    <script>
-        let cartCount = 0;
-        let wishlistCount = 0;
-
-        function showReqs(type) {
-            document.getElementById('min-reqs').style.display = type === 'min' ? 'block' : 'none';
-            document.getElementById('rec-reqs').style.display = type === 'rec' ? 'block' : 'none';
-
-            document.querySelectorAll('.req-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            event.target.classList.add('active');
-        }
-
-        function showNotification(message) {
-            const notification = document.getElementById('notification');
-            notification.textContent = message;
-            notification.classList.add('show');
-
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
-        }
-
-        function addToCart() {
-            cartCount++;
-            showNotification('✓ Magus and Tekks has been added to your cart!');
-
-            // Change button text temporarily
-            const btn = document.querySelector('.add-to-cart-btn');
-            const originalText = btn.textContent;
-            btn.textContent = 'Added to Cart!';
-            btn.style.background = '#4c6b22';
-
-            setTimeout(() => {
-                btn.textContent = originalText;
-                btn.style.background = '';
-            }, 2000);
-        }
-
-        function addToWishlist() {
-            wishlistCount++;
-            showNotification('✓ Magus and Tekks has been added to your wishlist!');
-
-            // Change button text
-            const btn = document.querySelector('.wishlist-btn');
-            btn.textContent = '✓ On Wishlist';
-            btn.style.background = 'rgba(103, 193, 245, 0.4)';
-        }
-    </script>
+    <div class="footer">
+        <p>&copy; 2005 A.U. Orb Digital Distribution &middot; <a href="about.html">About Us</a> &middot; <a href="support.html">Support</a></p>
+        <p><a href="index.html">Store</a> &middot; <a href="community.html">Forums</a> &middot; <a href="support.html">Support</a></p>
+    </div>
 </body>
-
 </html>

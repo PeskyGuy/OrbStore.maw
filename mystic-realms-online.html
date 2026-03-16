@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mystic Realms Online on Orb</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:"Trebuchet MS",Verdana,Arial,sans-serif; background:#e8e0d0; color:#333; font-size:12px; }
+        a { color:#0066cc; } a:visited { color:#660099; } a:hover { color:#cc3300; }
+
+        .header { background:linear-gradient(to bottom,#447799,#2a4d6e); border-bottom:3px solid #1a3050; }
+        .header-top { max-width:780px; margin:0 auto; display:flex; align-items:center; padding:8px 10px; gap:12px; }
+        .logo, .logo:visited { font-size:28px; font-weight:bold; color:#aaccee; text-decoration:none; text-shadow:1px 1px 2px rgba(0,0,0,0.5); font-family:"Impact","Arial Black",sans-serif; letter-spacing:2px; }
+        .logo-sub { font-size:9px; color:#aaccee; display:block; letter-spacing:0; font-family:Verdana,sans-serif; font-weight:normal; }
+        .nav-bar { background:#1a3050; border-bottom:1px solid #0e1e30; }
+        .nav { max-width:780px; margin:0 auto; display:flex; gap:0; padding:0 10px; }
+        .nav a { color:#99bbdd; text-decoration:none; font-size:11px; padding:6px 14px; display:block; border-right:1px solid #2a4d6e; }
+        .nav a:first-child { border-left:1px solid #2a4d6e; }
+        .nav a:hover { background:#2a4d6e; color:#fff; }
+
+        .container { max-width:780px; margin:0 auto; padding:12px 10px; }
+        .breadcrumb { font-size:10px; color:#666; margin-bottom:10px; }
+        .breadcrumb a { font-size:10px; }
+
+        .game-header { background:#fff; border:1px solid #999; margin-bottom:12px; }
+        .game-banner { background:#1a4d6e; padding:20px 16px; position:relative; overflow:hidden; }
+        .game-banner::before { content:''; position:absolute; width:200px; height:200px; border-radius:50%; background:radial-gradient(circle,rgba(100,200,255,0.25),transparent 70%); filter:blur(40px); top:-20%; right:-10%; }
+        .game-banner h1 { font-size:24px; color:#fff; text-shadow:2px 2px 4px rgba(0,0,0,0.6); position:relative; z-index:1; }
+        .game-banner p { font-size:12px; color:rgba(255,255,255,0.8); margin-top:6px; position:relative; z-index:1; }
+
+        .main-layout { display:flex; gap:12px; }
+        .main-content { flex:1; min-width:0; }
+        .sidebar { width:220px; flex-shrink:0; }
+
+        .content-box { background:#fff; border:1px solid #999; margin-bottom:10px; }
+        .content-box h2 { background:linear-gradient(to bottom,#447799,#2a4d6e); color:#fff; padding:5px 10px; font-size:12px; text-shadow:1px 1px 1px rgba(0,0,0,0.3); border-bottom:1px solid #1a3050; }
+        .content-box .inner { padding:10px 12px; font-size:11px; line-height:1.7; }
+        .content-box .inner p { margin-bottom:8px; }
+        
+        .screenshot-placeholder { background:#1a4d6e; height:180px; margin:0; display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.2); font-size:13px; }
+        .thumb-strip { display:flex; gap:2px; background:#ddd; }
+        .thumb { flex:1; height:40px; background:#1a4d6e; opacity:0.7; cursor:pointer; }
+        .thumb:hover { opacity:1; }
+
+        .purchase-box { background:#fff; border:1px solid #999; margin-bottom:10px; }
+        .purchase-box h3 { background:linear-gradient(to bottom,#447799,#2a4d6e); color:#fff; padding:5px 10px; font-size:11px; text-shadow:1px 1px 1px rgba(0,0,0,0.3); border-bottom:1px solid #1a3050; }
+        .purchase-inner { padding:10px; text-align:center; }
+        .price-display { margin:8px 0; }
+        .final-price { font-size:20px; font-weight:bold; color:#cc0000; }
+        .sub-text { font-size:9px; color:#888; margin-top:2px; }
+        .buy-btn { display:block; width:100%; padding:8px; background:linear-gradient(to bottom,#447799,#2a4d6e); border:2px outset #5588aa; color:#fff; font-size:13px; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px; }
+        .buy-btn:hover { background:linear-gradient(to bottom,#5588aa,#3a5d7e); }
+        .buy-btn:active { border-style:inset; }
+
+        .features-list { padding:8px 10px; font-size:10px; }
+        .features-list div { padding:2px 0; color:#333; border-bottom:1px dotted #ddd; }
+        .features-list div::before { content:"✓ "; color:#006600; font-weight:bold; }
+        .features-list div:last-child { border-bottom:none; }
+
+        .genre-tags { padding:8px 10px; display:flex; flex-wrap:wrap; gap:4px; }
+        .genre-tag { background:#ddd; color:#444; font-size:9px; padding:2px 6px; border:1px solid #bbb; }
+
+        .sidebar-box { background:#fff; border:1px solid #999; margin-bottom:10px; }
+        .sidebar-box h3 { background:linear-gradient(to bottom,#e8e0d0,#d0c8b8); color:#333; padding:4px 8px; font-size:10px; border-bottom:1px solid #999; }
+        .sidebar-box .sb-inner { padding:6px 8px; font-size:10px; line-height:1.6; }
+
+        .footer { background:#2a4d6e; color:#99bbdd; text-align:center; padding:12px; font-size:10px; border-top:3px solid #1a3050; margin-top:16px; }
+        .footer a { color:#aaccee; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-top">
+            <a href="index.html" class="logo">ORB<span class="logo-sub">Digital Distribution Platform</span></a>
+        </div>
+    </div>
+    <div class="nav-bar">
+        <div class="nav">
+            <a href="index.html">Store</a>
+            <a href="community.html">Community</a>
+            <a href="library.html">Library</a>
+            <a href="support.html">Support</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="breadcrumb"><a href="index.html">Store</a> &raquo; Mystic Realms Online</div>
+
+        <div class="game-header">
+            <div class="game-banner">
+                <h1>Mystic Realms Online</h1>
+                <p>The Union's most popular MMORPG. Join 2 million players.</p>
+            </div>
+        </div>
+
+        <div class="main-layout">
+            <div class="main-content">
+                <div class="content-box">
+                    <div class="screenshot-placeholder">[Epic Cinematic Screenshot]</div>
+                    <div class="thumb-strip">
+                        <div class="thumb"></div><div class="thumb"></div><div class="thumb"></div><div class="thumb"></div><div class="thumb"></div>
+                    </div>
+                </div>
+
+                <div class="content-box">
+                    <h2>About The Game</h2>
+                    <div class="inner">
+                        <p>Welcome to Vyrodin's largest digital playground. Mystic Realms Online (MRO) is a massive multiplayer experience where magic, technology, and community collide. Choose your Path, join a Guild, and forge your legend in the ever-expanding world of Ohsa.</p>
+                        <p><strong>Massive World:</strong> Explore the floating cities of Eos, the deep mana-mines of Kuldar, and the neon-streaked streets of the Union Capital. Every region is seamless and filled with secrets.</p>
+                        <p><strong>Recent Update:</strong> The "Civil Centennial" expansion is now live! Venture back in time to the height of the Great War and experience the events that shaped our world.</p>
+                        <p><strong>Key Features:</strong><br>
+                        • 12 unique classes with branching specializations<br>
+                        • Dynamic world events and world bosses<br>
+                        • Robust player-driven economy and crafting system<br>
+                        • Competitive PvP arenas and guild warfare<br>
+                        • Regular content updates every Firstday</p>
+                    </div>
+                </div>
+
+                <div class="content-box">
+                    <h2>Technical Specifications (Arcslate/PG)</h2>
+                    <div class="inner">
+                        <strong>Minimum:</strong><br>
+                        OS: Phantom OS 6 / Scryer 7<br>
+                        Processor: Runeforge Dual-Core 2.4 GHz<br>
+                        Memory: 4 GB Ethereal RAM<br>
+                        Network: Stable V-Link Connection Required
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="purchase-box">
+                    <h3>Play Now</h3>
+                    <div class="purchase-inner">
+                        <div class="price-display">
+                            <span class="final-price">Free to Play</span>
+                            <div class="sub-text">Includes base game + 1st expansion</div>
+                        </div>
+                        <button class="buy-btn" onclick="this.textContent='✓ Installing...';">Play Game</button>
+                    </div>
+                    <div class="genre-tags">
+                        <span class="genre-tag">MMORPG</span><span class="genre-tag">Online</span><span class="genre-tag">Social</span>
+                    </div>
+                    <div class="features-list">
+                        <div>Online Multiplayer</div><div>Guilds</div><div>Orb Friends</div><div>Micro-transactions</div>
+                    </div>
+                    <div class="dev-note" style="font-size:9px; color:#888; text-align:center; padding-top:4px;">Published by Orb Global Games</div>
+                </div>
+
+                <div class="sidebar-box">
+                    <h3>Community Links</h3>
+                    <div class="sb-inner">
+                        <a href="community.html">Official MRO Forums</a><br>
+                        <a href="#">Server Status</a><br>
+                        <a href="#">Wiki & Guide</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2005 A.U. Orb Digital Distribution &middot; <a href="about.html">About Us</a> &middot; <a href="support.html">Support</a></p>
+    </div>
+</body>
+</html>

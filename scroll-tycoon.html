@@ -1,599 +1,220 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scroll Tycoon on Orb</title>
+    <title>Scroll Tycoon: MAW Empire on Orb</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:"Trebuchet MS",Verdana,Arial,sans-serif; background:#e8e0d0; color:#333; font-size:12px; }
+        a { color:#0066cc; } a:visited { color:#660099; } a:hover { color:#cc3300; }
 
-        body {
-            font-family: Arial, Verdana, sans-serif;
-            background: #1b2838;
-            color: #c7d5e0;
-            font-size: 12px;
-        }
+        .header { background:linear-gradient(to bottom,#447799,#2a4d6e); border-bottom:3px solid #1a3050; }
+        .header-top { max-width:780px; margin:0 auto; display:flex; align-items:center; padding:8px 10px; gap:12px; }
+        .logo, .logo:visited { font-size:28px; font-weight:bold; color:#aaccee; text-decoration:none; text-shadow:1px 1px 2px rgba(0,0,0,0.5); font-family:"Impact","Arial Black",sans-serif; letter-spacing:2px; }
+        .logo-sub { font-size:9px; color:#aaccee; display:block; letter-spacing:0; font-family:Verdana,sans-serif; font-weight:normal; }
+        .nav-bar { background:#1a3050; border-bottom:1px solid #0e1e30; }
+        .nav { max-width:780px; margin:0 auto; display:flex; gap:0; padding:0 10px; }
+        .nav a { color:#99bbdd; text-decoration:none; font-size:11px; padding:6px 14px; display:block; border-right:1px solid #2a4d6e; }
+        .nav a:first-child { border-left:1px solid #2a4d6e; }
+        .nav a:hover { background:#2a4d6e; color:#fff; }
 
-        .header {
-            background: linear-gradient(to bottom, #171a21 0%, #1b2838 100%);
-            padding: 10px 0;
-            border-bottom: 1px solid #000;
-        }
+        .container { max-width:780px; margin:0 auto; padding:12px 10px; }
+        .breadcrumb { font-size:10px; color:#666; margin-bottom:10px; }
+        .breadcrumb a { font-size:10px; }
 
-        .header-content {
-            max-width: 940px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
+        .game-header { background:#fff; border:1px solid #999; margin-bottom:12px; }
+        .game-banner { background:#0a0a14; padding:20px 16px; position:relative; overflow:hidden; }
+        .game-banner::before { content:''; position:absolute; width:220px; height:220px; border-radius:50%; background:radial-gradient(circle,rgba(0,255,100,0.18),transparent 70%); filter:blur(40px); top:10%; left:10%; }
+        .game-banner::after { content:''; position:absolute; width:160px; height:160px; border-radius:50%; background:radial-gradient(circle,rgba(0,200,255,0.12),transparent 70%); filter:blur(35px); bottom:5%; right:15%; }
+        .game-banner h1 { font-size:24px; color:#00ff88; text-shadow:0 0 12px rgba(0,255,100,0.6); position:relative; z-index:1; font-family:"Courier New",monospace; }
+        .game-banner p { font-size:12px; color:rgba(0,255,136,0.7); margin-top:6px; position:relative; z-index:1; font-family:"Courier New",monospace; }
 
-        .logo {
-            color: #66c0f4;
-            font-size: 24px;
-            font-weight: bold;
-            text-decoration: none;
-        }
+        .main-layout { display:flex; gap:12px; }
+        .main-content { flex:1; min-width:0; }
+        .sidebar { width:220px; flex-shrink:0; }
 
-        .nav {
-            display: flex;
-            gap: 15px;
-        }
+        .content-box { background:#fff; border:1px solid #999; margin-bottom:10px; }
+        .content-box h2 { background:linear-gradient(to bottom,#447799,#2a4d6e); color:#fff; padding:5px 10px; font-size:12px; text-shadow:1px 1px 1px rgba(0,0,0,0.3); border-bottom:1px solid #1a3050; }
+        .content-box .inner { padding:10px 12px; font-size:11px; line-height:1.7; }
+        .content-box .inner p { margin-bottom:8px; }
+        .content-box .inner strong { color:#222; }
 
-        .nav a {
-            color: #b8b6b4;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-size: 11px;
-            padding: 5px 10px;
-        }
+        .screenshot-placeholder { background:#0a0a14; height:180px; margin:0; display:flex; align-items:center; justify-content:center; color:rgba(0,255,136,0.25); font-size:11px; font-family:"Courier New",monospace; position:relative; overflow:hidden; letter-spacing:1px; }
+        .screenshot-placeholder::before { content:''; position:absolute; width:200px; height:200px; border-radius:50%; background:radial-gradient(circle,rgba(0,255,100,0.12),transparent 70%); filter:blur(40px); top:20%; left:20%; }
+        .thumb-strip { display:flex; gap:2px; background:#ddd; }
+        .thumb { flex:1; height:40px; background:#0a0a14; opacity:0.7; cursor:pointer; position:relative; overflow:hidden; }
+        .thumb:hover { opacity:1; }
+        .thumb::before { content:''; position:absolute; width:30px; height:30px; border-radius:50%; background:radial-gradient(circle,rgba(0,255,100,0.2),transparent 70%); filter:blur(10px); top:5px; left:20%; }
 
-        .nav a:hover {
-            color: #fff;
-        }
+        .purchase-box { background:#fff; border:1px solid #999; margin-bottom:10px; }
+        .purchase-box h3 { background:linear-gradient(to bottom,#447799,#2a4d6e); color:#fff; padding:5px 10px; font-size:11px; text-shadow:1px 1px 1px rgba(0,0,0,0.3); border-bottom:1px solid #1a3050; }
+        .purchase-inner { padding:10px; text-align:center; }
+        .price-display { margin:8px 0; }
+        .final-price { font-size:20px; font-weight:bold; color:#cc0000; }
+        .buy-btn { display:block; width:100%; padding:8px; background:linear-gradient(to bottom,#447799,#2a4d6e); border:2px outset #5588aa; color:#fff; font-size:13px; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px; }
+        .buy-btn:hover { background:linear-gradient(to bottom,#5588aa,#3a5d7e); }
+        .buy-btn:active { border-style:inset; }
+        .wishlist-btn { display:block; width:100%; padding:6px; background:#e8e0d0; border:1px solid #999; color:#333; font-size:11px; cursor:pointer; font-family:inherit; margin-top:4px; }
+        .wishlist-btn:hover { background:#d0c8b8; }
 
-        .container {
-            max-width: 940px;
-            margin: 20px auto;
-            background: #000;
-        }
+        .features-list { padding:8px 10px; font-size:10px; }
+        .features-list div { padding:2px 0; color:#333; border-bottom:1px dotted #ddd; }
+        .features-list div::before { content:"✓ "; color:#006600; font-weight:bold; }
+        .features-list div:last-child { border-bottom:none; }
 
-        .game-header {
-            background: linear-gradient(to right, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 100%),
-                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400"><rect fill="%23171a21" width="800" height="400"/><text x="400" y="200" font-size="60" fill="%23ffffff22" text-anchor="middle" font-family="Arial">VYRODIN CHRONICLES</text></svg>');
-            background-size: cover;
-            padding: 30px;
-            border-bottom: 1px solid #000;
-        }
+        .genre-tags { padding:8px 10px; display:flex; flex-wrap:wrap; gap:4px; }
+        .genre-tag { background:#ddd; color:#444; font-size:9px; padding:2px 6px; border:1px solid #bbb; }
 
-        .game-title {
-            font-size: 32px;
-            color: #fff;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px #000;
-        }
+        .sidebar-box { background:#fff; border:1px solid #999; margin-bottom:10px; }
+        .sidebar-box h3 { background:linear-gradient(to bottom,#e8e0d0,#d0c8b8); color:#333; padding:4px 8px; font-size:10px; border-bottom:1px solid #999; }
+        .sidebar-box .sb-inner { padding:6px 8px; font-size:10px; line-height:1.6; }
+        .sidebar-box .sb-inner strong { color:#222; }
 
-        .game-description {
-            font-size: 13px;
-            color: #8f98a0;
-            max-width: 600px;
-        }
+        .review-entry { padding:8px 10px; border-bottom:1px dotted #ddd; font-size:10px; }
+        .review-entry:last-child { border-bottom:none; }
+        .review-stars { color:#cc8800; font-size:11px; }
+        .review-author { font-weight:bold; color:#555; }
 
-        .content-area {
-            display: flex;
-            gap: 20px;
-            padding: 20px;
-        }
+        .dev-note { font-size:9px; color:#888; text-align:center; padding:4px; border-top:1px dotted #ccc; margin-top:4px; }
 
-        .left-col {
-            flex: 1;
-        }
-
-        .right-col {
-            width: 300px;
-        }
-
-        .screenshot-area {
-            background: #16202d;
-            padding: 10px;
-            margin-bottom: 20px;
-        }
-
-        .main-screenshot {
-            width: 100%;
-            height: 350px;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #666;
-            font-size: 14px;
-            border: 1px solid #000;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .main-screenshot::before {
-            content: '';
-            position: absolute;
-            width: 180px;
-            height: 180px;
-            background: radial-gradient(circle, rgba(103, 193, 245, 0.3) 0%, transparent 70%);
-            border-radius: 50%;
-            filter: blur(40px);
-            top: 40%;
-            left: 25%;
-            transform: translate(-50%, -50%);
-        }
-
-        .main-screenshot::after {
-            content: '';
-            position: absolute;
-            width: 140px;
-            height: 140px;
-            background: radial-gradient(circle, rgba(167, 139, 250, 0.25) 0%, transparent 70%);
-            border-radius: 50%;
-            filter: blur(35px);
-            top: 65%;
-            right: 25%;
-        }
-
-        .thumbnail-strip {
-            display: flex;
-            gap: 5px;
-            margin-top: 10px;
-        }
-
-        .thumbnail {
-            width: 116px;
-            height: 65px;
-            background: #0e1621;
-            border: 1px solid #000;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            color: #555;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .thumbnail::before {
-            content: '';
-            position: absolute;
-            width: 60px;
-            height: 60px;
-            background: radial-gradient(circle, rgba(100, 150, 200, 0.3) 0%, transparent 70%);
-            border-radius: 50%;
-            filter: blur(15px);
-        }
-
-        .thumbnail:nth-child(1)::before {
-            background: radial-gradient(circle, rgba(103, 193, 245, 0.3) 0%, transparent 70%);
-            top: 10px;
-            left: 20px;
-        }
-
-        .thumbnail:nth-child(2)::before {
-            background: radial-gradient(circle, rgba(167, 139, 250, 0.3) 0%, transparent 70%);
-            top: 15px;
-            right: 15px;
-        }
-
-        .thumbnail:nth-child(3)::before {
-            background: radial-gradient(circle, rgba(139, 250, 200, 0.3) 0%, transparent 70%);
-            bottom: 10px;
-            left: 30px;
-        }
-
-        .thumbnail:nth-child(4)::before {
-            background: radial-gradient(circle, rgba(250, 200, 139, 0.3) 0%, transparent 70%);
-            top: 20px;
-            left: 40px;
-        }
-
-        .thumbnail:nth-child(5)::before {
-            background: radial-gradient(circle, rgba(200, 139, 250, 0.3) 0%, transparent 70%);
-            bottom: 15px;
-            right: 20px;
-        }
-
-        .thumbnail:hover {
-            border-color: #66c0f4;
-        }
-
-        .about-game {
-            background: #16202d;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-
-        .about-game h2 {
-            color: #fff;
-            font-size: 14px;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .about-game p {
-            line-height: 1.6;
-            margin-bottom: 10px;
-        }
-
-        .system-requirements {
-            background: #16202d;
-            padding: 15px;
-        }
-
-        .system-requirements h2 {
-            color: #fff;
-            font-size: 14px;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .req-tabs {
-            display: flex;
-            gap: 5px;
-            margin-bottom: 10px;
-        }
-
-        .req-tab {
-            padding: 5px 15px;
-            background: #1b2838;
-            cursor: pointer;
-            font-size: 11px;
-        }
-
-        .req-tab.active {
-            background: #66c0f4;
-            color: #000;
-        }
-
-        .req-content {
-            font-size: 11px;
-            line-height: 1.8;
-        }
-
-        .req-content strong {
-            color: #fff;
-        }
-
-        .purchase-area {
-            background: #16202d;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-
-        .game-logo-small {
-            width: 100%;
-            height: 150px;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #666;
-            font-size: 12px;
-        }
-
-        .price-box {
-            background: #000;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-
-        .discount-badge {
-            background: #4c6b22;
-            color: #beee11;
-            padding: 3px 8px;
-            font-size: 18px;
-            font-weight: bold;
-            display: inline-block;
-            margin-bottom: 10px;
-        }
-
-        .price-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .original-price {
-            color: #738895;
-            text-decoration: line-through;
-            font-size: 13px;
-        }
-
-        .final-price {
-            color: #beee11;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .add-to-cart-btn {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(to bottom, #799905 5%, #536904 100%);
-            border: 1px solid #000;
-            color: #d2e885;
-            font-size: 15px;
-            cursor: pointer;
-            text-align: center;
-            font-weight: bold;
-        }
-
-        .add-to-cart-btn:hover {
-            background: linear-gradient(to bottom, #8ab806 5%, #799905 100%);
-        }
-
-        .add-to-cart-btn:active {
-            background: #536904;
-        }
-
-        .wishlist-btn {
-            width: 100%;
-            padding: 8px;
-            background: rgba(103, 193, 245, 0.2);
-            border: 1px solid #417a9b;
-            color: #67c1f5;
-            font-size: 12px;
-            cursor: pointer;
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        .wishlist-btn:hover {
-            background: rgba(103, 193, 245, 0.3);
-        }
-
-        .features-list {
-            margin-top: 15px;
-            font-size: 11px;
-        }
-
-        .feature-item {
-            padding: 5px 0;
-            color: #8f98a0;
-        }
-
-        .feature-item::before {
-            content: "✓ ";
-            color: #67c1f5;
-        }
-
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #3d6c8d;
-            border: 1px solid #67c1f5;
-            padding: 15px 20px;
-            color: #fff;
-            font-size: 13px;
-            display: none;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-        }
-
-        .notification.show {
-            display: block;
-            animation: slideIn 0.3s ease-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(400px);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
+        .footer { background:#2a4d6e; color:#99bbdd; text-align:center; padding:12px; font-size:10px; border-top:3px solid #1a3050; margin-top:16px; }
+        .footer a { color:#aaccee; }
     </style>
 </head>
-
 <body>
     <div class="header">
-        <div class="header-content">
-            <a href="index.html" class="logo">ORB</a>
-            <div class="nav">
-                <a href="index.html">Store</a>
-                <a href="community.html">Community</a>
-                <a href="#">Library</a>
-                <a href="#">Support</a>
-            </div>
+        <div class="header-top">
+            <a href="index.html" class="logo">ORB<span class="logo-sub">Digital Distribution Platform</span></a>
+        </div>
+    </div>
+    <div class="nav-bar">
+        <div class="nav">
+            <a href="index.html">Store</a>
+            <a href="community.html">Community</a>
+            <a href="library.html">Library</a>
+            <a href="support.html">Support</a>
         </div>
     </div>
 
     <div class="container">
+        <div class="breadcrumb"><a href="index.html">Store</a> &raquo; Scroll Tycoon: MAW Empire</div>
+
         <div class="game-header">
-            <h1 class="game-title">Scroll Tycoon: M.A.W. Empire</h1>
-            <p class="game-description">
-                Build your Arcslate manufacturing empire and dominate the Mass Arcane Web market in this business
-                simulation
-            </p>
+            <div class="game-banner">
+                <h1>Scroll Tycoon: MAW Empire</h1>
+                <p>Build the ultimate industrial empire. Automate. Refine. Dominate the Union market.</p>
+            </div>
         </div>
 
-        <div class="content-area">
-            <div class="left-col">
-                <div class="screenshot-area">
-                    <div class="main-screenshot"></div>
-                    <div class="thumbnail-strip">
-                        <div class="thumbnail"></div>
-                        <div class="thumbnail"></div>
-                        <div class="thumbnail"></div>
-                        <div class="thumbnail"></div>
-                        <div class="thumbnail"></div>
-                    </div>
+        <div class="main-layout">
+            <div class="main-content">
+                <div class="screenshot-placeholder">[ INDUSTRIAL_EXTRACTION_PROTOCOLS &mdash; SCREENSHOT UNAVAILABLE ]</div>
+                <div class="thumb-strip">
+                    <div class="thumb"></div><div class="thumb"></div><div class="thumb"></div><div class="thumb"></div><div class="thumb"></div>
                 </div>
 
-                <div class="about-game">
+                <div class="content-box">
                     <h2>About This Game</h2>
-                    <p>
-                        The M.A.W. (Mass Arcane Web) has transformed society. What was once a luxury for the wealthy
-                        is now essential—everyone needs an Arcslate to function in modern Ohsa. Messages, banking,
-                        identification, even ration cards are all digital now. And you? You're going to get rich
-                        selling them these devices.
-                    </p>
-                    <p>
-                        Start with a small workshop in the industrial district of Vyrodin. Hire enchanters, source
-                        raw materials, and design your first Scroll model. Will you focus on budget devices for the
-                        masses, or luxury Arcslates for the elite? Maybe you'll corner the black market with
-                        untraceable models that bypass Church surveillance?
-                    </p>
-                    <p>
-                        <strong>Build Your Manufacturing Empire:</strong><br>
-                        Manage every aspect of production—from mining arcane crystals to final assembly. Upgrade
-                        your facilities, research new technologies, and optimize your supply chain. Hire skilled
-                        workers: enchanters to imbue the devices with magic, engineers to design sleeker models,
-                        and salespeople to push your products across all nine districts of Vyrodin.
-                    </p>
-                    <p>
-                        But business isn't just about production. Navigate corporate espionage, bribe Church officials
-                        for lucrative contracts, and sabotage your competitors. The market is cutthroat—literally.
-                        Some rival CEOs have been known to "disappear" after undercutting the wrong people.
-                    </p>
-                    <p>
-                        <strong>Control the M.A.W. Infrastructure:</strong><br>
-                        It's not enough to make Scrolls—you need to control the network itself. Build M.A.W. relay
-                        towers, establish data centers, and create your own apps and services. Charge subscription
-                        fees, sell user data (carefully—the Church watches), and become the backbone of digital life
-                        in Ohsa.
-                    </p>
-                    <p>
-                        <strong>Key Features:</strong><br>
-                        • Design custom Arcslate models with different specs, features, and price points<br>
-                        • Manage complex supply chains across multiple districts with varying regulations<br>
-                        • Research new technologies: longer battery life, better encryption, holographic displays<br>
-                        • Navigate political intrigue—work with or against the Church and underground factions<br>
-                        • Dynamic market simulation where your decisions affect prices and demand<br>
-                        • Expand beyond Vyrodin to other cities in Ohsa<br>
-                        • Sandbox mode: unlimited resources to build your dream tech empire<br>
-                        • Campaign mode: rise from a small workshop to a continental monopoly
-                    </p>
+                    <div class="inner">
+                        <p>The MAW's industrial heartland is yours to command. <strong>Scroll Tycoon: MAW Empire</strong> is a factory-building and logistics simulation set in the Union's sprawling underground refineries. Start with a pickaxe and a dream &mdash; end up running the most sophisticated arcane manufacturing operation in the known world.</p>
+                        <p><strong>Manual Extraction to Full Automation:</strong><br>Mine raw ferrite and crystal shards by hand to bootstrap your first Union Marks, then reinvest into Mining Rigs, Refineries, Forges, and Assemblers to build self-sustaining production lines.</p>
+                        <p><strong>Directional Conveyor Networks:</strong><br>Route resources across the factory floor using rotatable conveyor belts and storage silos. Design efficient supply chains or watch your output grind to a halt.</p>
+                        <p><strong>Tiered Arcane Manufacturing:</strong><br>Smelt raw ore into Ferrite, Copperium, and Gildite. Refine raw crystals into Quartz, Ruby, and Diamond. Combine processed materials in your Forge and Assembler to produce ArcM slates and, ultimately, the legendary Grimoire &mdash; worth 100,000 UM on the open market.</p>
+                        <p><strong>Global Market Leaderboard:</strong><br>Your Union Marks score is tracked against the great industrial CEOs of the MAW. Can you unseat Gabriel Gear from the top spot?</p>
+                    </div>
                 </div>
 
-                <div class="system-requirements">
-                    <h2>System Requirements</h2>
-                    <div class="req-tabs">
-                        <div class="req-tab active" onclick="showReqs('min')">MINIMUM</div>
-                        <div class="req-tab" onclick="showReqs('rec')">RECOMMENDED</div>
+                <div class="content-box">
+                    <h2>System Requirements (Arcslate/PG)</h2>
+                    <div class="inner">
+                        <strong>Minimum:</strong><br>
+                        OS: Phantom OS 2 / Scryer 4<br>
+                        Processor: Runeforge CPU 800 MHz<br>
+                        Memory: 256 MB Ethereal RAM<br>
+                        Graphics: ManaCore 32 MB<br>
+                        Rendering: ArcX 7.0+<br>
+                        Storage: 1.2 GB available<br><br>
+                        <strong>Recommended:</strong><br>
+                        OS: Phantom OS 3 / Scryer 5<br>
+                        Processor: Runeforge CPU 1.8 GHz<br>
+                        Memory: 512 MB Ethereal RAM<br>
+                        Graphics: Spellweaver 8 / ManaCore 64 MB<br>
+                        Rendering: ArcX 8.1+<br>
+                        Storage: 1.2 GB available
                     </div>
-                    <div class="req-content" id="min-reqs">
-                        <strong>OS:</strong> Phantom OS 3 / Specter 2000/XP<br>
-                        <strong>Processor:</strong> Single-Core Runeforge 1200 or equivalent<br>
-                        <strong>Memory:</strong> 256 MB Ethereal RAM<br>
-                        <strong>Graphics:</strong> ManaCore 64 MB or Spellweaver 8 compatible<br>
-                        <strong>Rendering:</strong> ArcX 8.1 or higher<br>
-                        <strong>Storage:</strong> 2 GB available space<br>
-                        <strong>Audio:</strong> Resonance Sound compatible
+                </div>
+
+                <div class="content-box">
+                    <h2>User Reviews</h2>
+                    <div class="review-entry">
+                        <div><span class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> <span class="review-author">ferrite_king_99</span></div>
+                        <div style="margin-top:3px;">Put 80 hours in and I still haven't built a Grimoire. This game is the real deal. The conveyor routing alone has more depth than most full releases.</div>
                     </div>
-                    <div class="req-content" id="rec-reqs" style="display:none;">
-                        <strong>OS:</strong> Phantom OS 5 / Specter XP/Vista<br>
-                        <strong>Processor:</strong> Dual-Core Runeforge 2400 or Mystic Blade CPU<br>
-                        <strong>Memory:</strong> 512 MB Ethereal RAM<br>
-                        <strong>Graphics:</strong> ManaCore 128 MB or Spellweaver 9 compatible<br>
-                        <strong>Rendering:</strong> ArcX 9.0c or higher<br>
-                        <strong>Storage:</strong> 3 GB available space<br>
-                        <strong>Audio:</strong> Resonance Surround compatible
+                    <div class="review-entry">
+                        <div><span class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span> <span class="review-author">UnionForeman</span></div>
+                        <div style="margin-top:3px;">Incredible factory sim. The manual mining minigame gets repetitive but once you've automated it you'll forget it existed. Highly recommend for fans of deep logistics games.</div>
+                    </div>
+                    <div class="review-entry">
+                        <div><span class="review-stars">&#9733;&#9733;&#9733;&#9734;&#9734;</span> <span class="review-author">CasualArchmage</span></div>
+                        <div style="margin-top:3px;">A bit overwhelming at first. No handholding past the tutorial. That said, once it clicks, it REALLY clicks. Would benefit from a better in-game guide.</div>
                     </div>
                 </div>
             </div>
 
-            <div class="right-col">
-                <div class="purchase-area">
-                    <div class="game-logo-small">
-                        [Game Logo]
+            <div class="sidebar">
+                <div class="purchase-box">
+                    <h3>Purchase</h3>
+                        <div class="purchase-inner">
+                            <div class="discount-badge" style="display:inline-block; background:#cc3300; color:#fff; font-size:18px; font-weight:bold; padding:2px 10px; margin-bottom:6px;">-75%</div>
+                            <div class="price-display">
+                                <span class="orig-price" style="text-decoration:line-through; color:#888; font-size:11px; margin-right:6px;">1 um 2 ut</span>
+                                <span class="final-price">3 ut</span>
+                            </div>
+                            <button class="buy-btn" onclick="this.textContent='&#10003; Added to Cart!';this.style.background='#336633';">Add to Cart</button>
+                        <button class="wishlist-btn" onclick="this.textContent='&#10003; On Wishlist';">&#9825; Add to Wishlist</button>
                     </div>
-
-                    <div class="price-box">
-                        <div class="discount-badge">-75%</div>
-                        <div class="price-row">
-                            <span class="original-price">$39.99</span>
-                            <span class="final-price">$9.99</span>
-                        </div>
+                    <div class="genre-tags">
+                        <span class="genre-tag">Tycoon</span><span class="genre-tag">Factory</span><span class="genre-tag">Simulation</span><span class="genre-tag">Strategy</span>
                     </div>
-
-                    <button class="add-to-cart-btn" onclick="addToCart()">
-                        Add to Cart
-                    </button>
-
-                    <button class="wishlist-btn" onclick="addToWishlist()">
-                        Add to Wishlist
-                    </button>
-
                     <div class="features-list">
-                        <div class="feature-item">Single-player</div>
-                        <div class="feature-item">Orb Achievements</div>
-                        <div class="feature-item">Full Controller Support</div>
-                        <div class="feature-item">Orb Cloud</div>
+                        <div>Single-player</div>
+                        <div>Global Leaderboards</div>
+                        <div>Deep Logistics</div>
+                        <div>Arcane Manufacturing</div>
+                        <div>Open World Factory</div>
+                    </div>
+                    <div class="dev-note">Developed by IronScript Games &middot; Published 2003 A.U.</div>
+                </div>
+
+                <div class="sidebar-box">
+                    <h3>Game Details</h3>
+                    <div class="sb-inner">
+                        <strong>Release Date:</strong> 14 Harvest, 2003 A.U.<br>
+                        <strong>Developer:</strong> IronScript Games<br>
+                        <strong>Publisher:</strong> Union Interactive<br>
+                        <strong>Genre:</strong> Tycoon / Simulation<br>
+                        <strong>Languages:</strong> Common, Old Runic<br>
+                        <strong>Players:</strong> 1<br>
+                    </div>
+                </div>
+
+                <div class="sidebar-box">
+                    <h3>Related Games</h3>
+                    <div class="sb-inner">
+                        <a href="spellforge-simulator.html">Spellforge Simulator</a><br>
+                        <a href="enchanters-workshop.html">Enchanter's Workshop</a><br>
+                        <a href="glyphstone-tactics.html">Glyphstone Tactics</a><br><br>
+                        <a href="index.html">&larr; Browse all games</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="notification" id="notification"></div>
-
-    <script>
-        let cartCount = 0;
-        let wishlistCount = 0;
-
-        function showReqs(type) {
-            document.getElementById('min-reqs').style.display = type === 'min' ? 'block' : 'none';
-            document.getElementById('rec-reqs').style.display = type === 'rec' ? 'block' : 'none';
-
-            document.querySelectorAll('.req-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            event.target.classList.add('active');
-        }
-
-        function showNotification(message) {
-            const notification = document.getElementById('notification');
-            notification.textContent = message;
-            notification.classList.add('show');
-
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
-        }
-
-        function addToCart() {
-            cartCount++;
-            showNotification('✓ Scroll Tycoon has been added to your cart!');
-
-            // Change button text temporarily
-            const btn = document.querySelector('.add-to-cart-btn');
-            const originalText = btn.textContent;
-            btn.textContent = 'Added to Cart!';
-            btn.style.background = '#4c6b22';
-
-            setTimeout(() => {
-                btn.textContent = originalText;
-                btn.style.background = '';
-            }, 2000);
-        }
-
-        function addToWishlist() {
-            wishlistCount++;
-            showNotification('✓ Scroll Tycoon has been added to your wishlist!');
-
-            // Change button text
-            const btn = document.querySelector('.wishlist-btn');
-            btn.textContent = '✓ On Wishlist';
-            btn.style.background = 'rgba(103, 193, 245, 0.4)';
-        }
-    </script>
+    <div class="footer">
+        <p>&copy; 2005 A.U. Orb Digital Distribution &middot; <a href="about.html">About Us</a> &middot; <a href="support.html">Support</a></p>
+        <p><a href="index.html">Store</a> &middot; <a href="community.html">Forums</a> &middot; <a href="support.html">Support</a></p>
+    </div>
 </body>
-
 </html>
