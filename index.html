@@ -19,9 +19,17 @@
             font-size: 12px;
         }
 
-        a { color: #0066cc; }
-        a:visited { color: #660099; }
-        a:hover { color: #cc3300; }
+        a {
+            color: #0066cc;
+        }
+
+        a:visited {
+            color: #660099;
+        }
+
+        a:hover {
+            color: #cc3300;
+        }
 
         /* ── Header ── */
         .header {
@@ -29,6 +37,7 @@
             border-bottom: 3px solid #1a3050;
             padding: 0;
         }
+
         .header-top {
             max-width: 780px;
             margin: 0 auto;
@@ -37,15 +46,18 @@
             padding: 8px 10px;
             gap: 12px;
         }
-        .logo, .logo:visited {
+
+        .logo,
+        .logo:visited {
             font-size: 28px;
             font-weight: bold;
             color: #aaccee;
             text-decoration: none;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
             font-family: "Impact", "Arial Black", sans-serif;
             letter-spacing: 2px;
         }
+
         .logo-sub {
             font-size: 9px;
             color: #aaccee;
@@ -54,10 +66,12 @@
             font-family: Verdana, sans-serif;
             font-weight: normal;
         }
+
         .nav-bar {
             background: #1a3050;
             border-bottom: 1px solid #0e1e30;
         }
+
         .nav {
             max-width: 780px;
             margin: 0 auto;
@@ -65,6 +79,7 @@
             gap: 0;
             padding: 0 10px;
         }
+
         .nav a {
             color: #99bbdd;
             text-decoration: none;
@@ -73,23 +88,33 @@
             display: block;
             border-right: 1px solid #2a4d6e;
         }
-        .nav a:first-child { border-left: 1px solid #2a4d6e; }
-        .nav a:hover, .nav a.active {
+
+        .nav a:first-child {
+            border-left: 1px solid #2a4d6e;
+        }
+
+        .nav a:hover,
+        .nav a.active {
             background: #2a4d6e;
             color: #fff;
         }
+
         .header-right {
             margin-left: auto;
             display: flex;
             gap: 8px;
             align-items: center;
         }
+
         .header-right a {
             color: #aaccee;
             text-decoration: none;
             font-size: 10px;
         }
-        .header-right a:hover { color: #fff; }
+
+        .header-right a:hover {
+            color: #fff;
+        }
 
         /* ── Container ── */
         .container {
@@ -108,15 +133,25 @@
             font-weight: bold;
             border: 2px solid #990000;
             margin-bottom: 12px;
-            text-shadow: 1px 1px 1px rgba(0,0,0,0.4);
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
         }
+
         .sale-banner .blink {
             animation: blink-text 1.2s step-end infinite;
         }
+
         @keyframes blink-text {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
         }
+
         .sale-sub {
             font-size: 11px;
             font-weight: normal;
@@ -130,11 +165,13 @@
             padding: 12px 14px;
             margin-bottom: 12px;
         }
+
         .welcome-box h2 {
             font-size: 16px;
             color: #2a4d6e;
             margin-bottom: 6px;
         }
+
         .welcome-box p {
             line-height: 1.5;
             color: #444;
@@ -149,7 +186,7 @@
             font-weight: bold;
             margin-bottom: 1px;
             border: 1px solid #1a3050;
-            text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
         }
 
         /* ── Game table ── */
@@ -160,6 +197,7 @@
             background: #fff;
             border: 1px solid #999;
         }
+
         .game-table th {
             background: linear-gradient(to bottom, #e8e0d0, #d0c8b8);
             border: 1px solid #999;
@@ -168,43 +206,53 @@
             font-size: 11px;
             color: #333;
         }
+
         .game-table td {
             border: 1px solid #ccc;
             padding: 6px 8px;
             vertical-align: top;
             font-size: 11px;
         }
+
         .game-table tr:nth-child(even) td {
             background: #f5f0e8;
         }
+
         .game-table tr:hover td {
             background: #e8e0d0;
         }
+
         .game-title-cell {
             font-weight: bold;
         }
+
         .game-title-cell a {
             font-size: 12px;
         }
+
         .game-desc {
             color: #555;
             font-size: 10px;
             margin-top: 2px;
         }
+
         .price-cell {
             text-align: right;
             white-space: nowrap;
         }
+
         .orig-price {
             text-decoration: line-through;
             color: #888;
             font-size: 10px;
         }
+
         .sale-price {
             color: #cc0000;
             font-weight: bold;
             font-size: 13px;
         }
+
         .discount-tag {
             background: #cc3300;
             color: #fff;
@@ -213,6 +261,7 @@
             padding: 1px 4px;
             margin-left: 4px;
         }
+
         .new-tag {
             background: #006600;
             color: #fff;
@@ -221,6 +270,7 @@
             padding: 1px 4px;
             margin-left: 4px;
         }
+
         .hot-tag {
             background: #cc6600;
             color: #fff;
@@ -229,6 +279,7 @@
             padding: 1px 4px;
             margin-left: 4px;
         }
+
         .genre-tag {
             background: #ddd;
             color: #444;
@@ -237,6 +288,7 @@
             border: 1px solid #bbb;
             margin-right: 3px;
         }
+
         .rating-stars {
             color: #cc6600;
             font-size: 12px;
@@ -248,53 +300,75 @@
             display: flex;
             gap: 12px;
         }
-        .main-content { flex: 1; min-width: 0; }
+
+        .main-content {
+            flex: 1;
+            min-width: 0;
+        }
+
         .sidebar {
             width: 200px;
             flex-shrink: 0;
         }
+
         .sidebar-box {
             background: #fff;
             border: 1px solid #999;
             margin-bottom: 10px;
         }
+
         .sidebar-box h3 {
             background: linear-gradient(to bottom, #447799, #2a4d6e);
             color: #fff;
             padding: 4px 8px;
             font-size: 11px;
-            text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
             border-bottom: 1px solid #1a3050;
         }
+
         .sidebar-box ul {
             list-style: none;
             padding: 6px 8px;
         }
+
         .sidebar-box li {
             padding: 2px 0;
             font-size: 11px;
             border-bottom: 1px dotted #ddd;
         }
-        .sidebar-box li:last-child { border-bottom: none; }
-        .sidebar-box li a { text-decoration: none; }
-        .sidebar-box li a:hover { text-decoration: underline; }
+
+        .sidebar-box li:last-child {
+            border-bottom: none;
+        }
+
+        .sidebar-box li a {
+            text-decoration: none;
+        }
+
+        .sidebar-box li a:hover {
+            text-decoration: underline;
+        }
+
         .sidebar-ad {
             padding: 8px;
             font-size: 10px;
             text-align: center;
             line-height: 1.5;
         }
+
         .sidebar-ad .ad-title {
             font-weight: bold;
             color: #cc3300;
             font-size: 11px;
         }
+
         .counter-box {
             padding: 8px;
             text-align: center;
             font-size: 10px;
             color: #555;
         }
+
         .counter-num {
             font-size: 18px;
             font-weight: bold;
@@ -311,7 +385,10 @@
             border-top: 3px solid #1a3050;
             margin-top: 16px;
         }
-        .footer a { color: #aaccee; }
+
+        .footer a {
+            color: #aaccee;
+        }
 
         /* ── Visitor counter ── */
         .hitcounter {
@@ -350,7 +427,8 @@
 
         <div class="sale-banner">
             <span class="blink">★</span> WEEKEND ARCANE SALE — UP TO 75% OFF SELECT TITLES! <span class="blink">★</span>
-            <div class="sale-sub">Sale ends Seconday, 20 Harvest 2005 A.U. · Don't miss out on these legendary deals!</div>
+            <div class="sale-sub">Sale ends Seconday, 20 Harvest 2005 A.U. · Don't miss out on these legendary deals!
+            </div>
         </div>
 
         <div class="main-layout">
@@ -358,7 +436,9 @@
 
                 <div class="welcome-box">
                     <h2>Welcome to Orb</h2>
-                    <p>Your premier destination for digital Arcslate &amp; Personal Grimoire (PG) titles. Browse, purchase, and download the latest games powered by ArcX technology. Over <b>4,200</b> titles available. New releases every week!</p>
+                    <p>Your premier destination for digital Arcslate &amp; Personal Grimoire (PG) titles. Browse,
+                        purchase, and download the latest games powered by ArcX technology. Over <b>4,200</b> titles
+                        available. New releases every week!</p>
                 </div>
 
                 <!-- Featured / On Sale -->
@@ -375,48 +455,59 @@
                     <tbody>
                         <tr>
                             <td class="game-title-cell">
-                                <a href="scroll-tycoon.html">Scroll Tycoon: M.A.W. Empire</a> <span class="discount-tag">-75%</span>
-                                <div class="game-desc">Build your Arcslate &amp; PG manufacturing empire and dominate the M.A.W. market.</div>
+                                <a href="scroll-tycoon.html">Scroll Tycoon: Arcane Trading Simulator</a> <span
+                                    class="discount-tag">-50%</span>
+                                <div class="game-desc">Build your Arcslate &amp; PG manufacturing empire and dominate
+                                    the M.A.W. market.</div>
                             </td>
                             <td><span class="genre-tag">Simulation</span><span class="genre-tag">Strategy</span></td>
                             <td class="rating-stars">★★★★☆</td>
-                            <td class="price-cell"><span class="orig-price">1 um 2 ut</span><br><span class="sale-price">3 ut</span></td>
+                            <td class="price-cell"><span class="orig-price">5 ut</span><br><span class="sale-price">2 ut 1 ud</span></td>
                         </tr>
                         <tr>
                             <td class="game-title-cell">
                                 <a href="magus-tekks.html">Magus and Tekks</a> <span class="discount-tag">-50%</span>
-                                <div class="game-desc">Tactical FPS where magic meets military technology. 10-chapter campaign + multiplayer.</div>
+                                <div class="game-desc">Tactical FPS where magic meets military technology. 10-chapter
+                                    campaign + multiplayer.</div>
                             </td>
                             <td><span class="genre-tag">FPS</span><span class="genre-tag">Action</span></td>
                             <td class="rating-stars">★★★★★</td>
-                            <td class="price-cell"><span class="orig-price">2 um 4 ut</span><br><span class="sale-price">1 um 2 ut</span></td>
+                            <td class="price-cell"><span class="orig-price">17 ut</span><br><span
+                                    class="sale-price">8 ut 5 ud</span></td>
                         </tr>
                         <tr>
                             <td class="game-title-cell">
-                                <a href="riftwalker-chronicles.html">Riftwalker Chronicles</a> <span class="discount-tag">-60%</span> <span class="hot-tag">HOT</span>
-                                <div class="game-desc">Open-world RPG. Traverse dimensional rifts and uncover ancient secrets. Massive update just released!</div>
+                                <a href="riftwalker-chronicles.html">Riftwalker Chronicles</a> <span
+                                    class="discount-tag">-60%</span> <span class="hot-tag">HOT</span>
+                                <div class="game-desc">Open-world RPG. Traverse dimensional rifts and uncover ancient
+                                    secrets. Massive update just released!</div>
                             </td>
                             <td><span class="genre-tag">RPG</span><span class="genre-tag">Adventure</span></td>
                             <td class="rating-stars">★★★★★</td>
-                            <td class="price-cell"><span class="orig-price">1 um 8 ut</span><br><span class="sale-price">8 ut</span></td>
+                            <td class="price-cell"><span class="orig-price">13 ut</span><br><span
+                                    class="sale-price">5 ut 6 ud</span></td>
                         </tr>
                         <tr>
                             <td class="game-title-cell">
                                 <a href="phantom-blade-3.html">Phantom Blade 3</a> <span class="new-tag">NEW</span>
-                                <div class="game-desc">The long-awaited sequel. Stealth-action with arcane blade combat. Pre-order now!</div>
+                                <div class="game-desc">The long-awaited sequel. Stealth-action with arcane blade combat.
+                                    Pre-order now!</div>
                             </td>
                             <td><span class="genre-tag">Action</span><span class="genre-tag">Stealth</span></td>
                             <td class="rating-stars">—</td>
-                            <td class="price-cell"><span class="sale-price">3 um 2 ut</span></td>
+                            <td class="price-cell"><span class="sale-price">22 ut 4 ud</span></td>
                         </tr>
                         <tr>
                             <td class="game-title-cell">
-                                <a href="soulbound-legacy.html">Soulbound Legacy</a> <span class="discount-tag">-40%</span>
-                                <div class="game-desc">Epic story-driven RPG. Forge soul-bonds with companions. 80+ hours of content.</div>
+                                <a href="soulbound-legacy.html">Soulbound Legacy</a> <span
+                                    class="discount-tag">-40%</span>
+                                <div class="game-desc">Epic story-driven RPG. Forge soul-bonds with companions. 80+
+                                    hours of content.</div>
                             </td>
                             <td><span class="genre-tag">RPG</span><span class="genre-tag">Story</span></td>
                             <td class="rating-stars">★★★☆☆</td>
-                            <td class="price-cell"><span class="orig-price">2 um 3 ut</span><br><span class="sale-price">1 um 2 ut</span></td>
+                            <td class="price-cell"><span class="orig-price">16 ut</span><br><span
+                                    class="sale-price">8 ut 5 ud</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -435,66 +526,75 @@
                     <tbody>
                         <tr>
                             <td class="game-title-cell">
-                                <a href="mystic-realms-online.html">Mystic Realms Online</a> <span class="hot-tag">POPULAR</span>
-                                <div class="game-desc">Massive multiplayer online RPG. Guilds, raids, PvP arenas. Server transfer available.</div>
+                                <a href="mystic-realms-online.html">Mystic Realms Online</a> <span
+                                    class="hot-tag">POPULAR</span>
+                                <div class="game-desc">Massive multiplayer online RPG. Guilds, raids, PvP arenas. Server
+                                    transfer available.</div>
                             </td>
                             <td><span class="genre-tag">MMORPG</span></td>
                             <td class="rating-stars">★★★★☆</td>
-                            <td class="price-cell"><span class="sale-price">Free</span><br><span style="font-size:9px;color:#888;">+subscription</span></td>
+                            <td class="price-cell"><span class="sale-price">Free</span><br><span
+                                    style="font-size:9px;color:#888;">+subscription</span></td>
                         </tr>
                         <tr>
                             <td class="game-title-cell">
                                 <a href="elemental-arena.html">Elemental Arena</a> <span class="hot-tag">HOT</span>
-                                <div class="game-desc">Competitive spell-dueling arena. Ranked matchmaking. Current meta: heavily debated.</div>
+                                <div class="game-desc">Competitive spell-dueling arena. Ranked matchmaking. Current
+                                    meta: heavily debated.</div>
                             </td>
                             <td><span class="genre-tag">PvP</span><span class="genre-tag">Arena</span></td>
                             <td class="rating-stars">★★★★☆</td>
-                            <td class="price-cell"><span class="sale-price">1 um 5 ut</span></td>
+                            <td class="price-cell"><span class="sale-price">10 ut 5 ud</span></td>
                         </tr>
                         <tr>
                             <td class="game-title-cell">
                                 <a href="arcane-warfare.html">Arcane Warfare</a>
-                                <div class="game-desc">Team-based tactical combat. 5v5 ranked matches. E-sports ready.</div>
+                                <div class="game-desc">Team-based tactical combat. 5v5 ranked matches. E-sports ready.
+                                </div>
                             </td>
                             <td><span class="genre-tag">FPS</span><span class="genre-tag">Tactical</span></td>
                             <td class="rating-stars">★★★★☆</td>
-                            <td class="price-cell"><span class="sale-price">1 um 8 ut</span></td>
+                            <td class="price-cell"><span class="sale-price">12 ut 6 ud</span></td>
                         </tr>
                         <tr>
                             <td class="game-title-cell">
                                 <a href="riftblade-champions.html">Riftblade Champions</a>
-                                <div class="game-desc">Hero-based combat. Recent patch shook up the roster. Tournament scene thriving.</div>
+                                <div class="game-desc">Hero-based combat. Recent patch shook up the roster. Tournament
+                                    scene thriving.</div>
                             </td>
                             <td><span class="genre-tag">Action</span><span class="genre-tag">PvP</span></td>
                             <td class="rating-stars">★★★★☆</td>
-                            <td class="price-cell"><span class="sale-price">1 um 2 ut</span></td>
+                            <td class="price-cell"><span class="sale-price">8 ut 5 ud</span></td>
                         </tr>
                         <tr>
                             <td class="game-title-cell">
                                 <a href="astral-conquest.html">Astral Conquest</a>
-                                <div class="game-desc">Cooperative space-fantasy strategy. Build fleets, conquer star systems. Guild wars.</div>
+                                <div class="game-desc">Cooperative space-fantasy strategy. Build fleets, conquer star
+                                    systems. Guild wars.</div>
                             </td>
                             <td><span class="genre-tag">Strategy</span><span class="genre-tag">Co-op</span></td>
                             <td class="rating-stars">★★★☆☆</td>
-                            <td class="price-cell"><span class="sale-price">1 um</span></td>
+                            <td class="price-cell"><span class="sale-price">7 ut</span></td>
                         </tr>
                         <tr>
                             <td class="game-title-cell">
                                 <a href="spectral-siege.html">Spectral Siege</a>
-                                <div class="game-desc">Competitive tower defense with ghost summoning. Map tier list hotly contested.</div>
+                                <div class="game-desc">Competitive tower defense with ghost summoning. Map tier list
+                                    hotly contested.</div>
                             </td>
                             <td><span class="genre-tag">Strategy</span><span class="genre-tag">TD</span></td>
                             <td class="rating-stars">★★★★☆</td>
-                            <td class="price-cell"><span class="sale-price">8 ut</span></td>
+                            <td class="price-cell"><span class="sale-price">5 ut 6 ud</span></td>
                         </tr>
                         <tr>
                             <td class="game-title-cell">
                                 <a href="spellslinger-showdown.html">Spellslinger Showdown</a>
-                                <div class="game-desc">Fast-paced 1v1 dueling. Tournament brackets every weekend. Easy to learn, hard to master.</div>
+                                <div class="game-desc">Fast-paced 1v1 dueling. Tournament brackets every weekend. Easy
+                                    to learn, hard to master.</div>
                             </td>
                             <td><span class="genre-tag">Fighting</span><span class="genre-tag">PvP</span></td>
                             <td class="rating-stars">★★★★☆</td>
-                            <td class="price-cell"><span class="orig-price">1 um</span><br><span class="sale-price">5 ut</span></td>
+                            <td class="price-cell"><span class="orig-price">7 ut</span><br><span class="sale-price">3 ut 5 ud</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -514,47 +614,53 @@
                         <tr>
                             <td class="game-title-cell">
                                 <a href="spellforge-simulator.html">Spellforge Simulator</a>
-                                <div class="game-desc">Craft enchantments, manage a spellforge workshop. Surprisingly deep. Underrated gem.</div>
+                                <div class="game-desc">Craft enchantments, manage a spellforge workshop. Surprisingly
+                                    deep. Underrated gem.</div>
                             </td>
                             <td><span class="genre-tag">Simulation</span><span class="genre-tag">Craft</span></td>
                             <td class="rating-stars">★★★★☆</td>
-                            <td class="price-cell"><span class="sale-price">8 ut</span></td>
+                            <td class="price-cell"><span class="sale-price">5 ut 6 ud</span></td>
                         </tr>
                         <tr>
                             <td class="game-title-cell">
                                 <a href="glyphstone-tactics.html">Glyphstone Tactics</a>
-                                <div class="game-desc">Turn-based tactical RPG. Rune-based ability system. Weekly tournaments with prizes.</div>
+                                <div class="game-desc">Turn-based tactical RPG. Rune-based ability system. Weekly
+                                    tournaments with prizes.</div>
                             </td>
                             <td><span class="genre-tag">Tactics</span><span class="genre-tag">RPG</span></td>
                             <td class="rating-stars">★★★★★</td>
-                            <td class="price-cell"><span class="sale-price">1 um 2 ut</span></td>
+                            <td class="price-cell"><span class="sale-price">8 ut 5 ud</span></td>
                         </tr>
                         <tr>
                             <td class="game-title-cell">
-                                <a href="enchanters-workshop.html">Enchanter's Workshop</a> <span class="new-tag">NEW</span>
-                                <div class="game-desc">Hidden indie gem. Build and manage your own enchanting business. Cozy vibes.</div>
+                                <a href="enchanters-workshop.html">Enchanter's Workshop</a> <span
+                                    class="new-tag">NEW</span>
+                                <div class="game-desc">Hidden indie gem. Build and manage your own enchanting business.
+                                    Cozy vibes.</div>
                             </td>
                             <td><span class="genre-tag">Indie</span><span class="genre-tag">Management</span></td>
                             <td class="rating-stars">★★★★☆</td>
-                            <td class="price-cell"><span class="sale-price">5 ut</span></td>
+                            <td class="price-cell"><span class="sale-price">3 ut 5 ud</span></td>
                         </tr>
                         <tr>
                             <td class="game-title-cell">
                                 <a href="chronomancers-quest.html">Chronomancer's Quest</a>
-                                <div class="game-desc">Time-bending puzzle adventure. Manipulate timelines to solve mysteries. Modding community active.</div>
+                                <div class="game-desc">Time-bending puzzle adventure. Manipulate timelines to solve
+                                    mysteries. Modding community active.</div>
                             </td>
                             <td><span class="genre-tag">Puzzle</span><span class="genre-tag">Adventure</span></td>
                             <td class="rating-stars">★★★★☆</td>
-                            <td class="price-cell"><span class="sale-price">1 um</span></td>
+                            <td class="price-cell"><span class="sale-price">7 ut</span></td>
                         </tr>
                         <tr>
                             <td class="game-title-cell">
                                 <a href="dimensional-rift.html">Dimensional Rift</a>
-                                <div class="game-desc">Atmospheric horror-exploration. Navigate unstable dimensions. 4K Manacore texture pack available.</div>
+                                <div class="game-desc">Atmospheric horror-exploration. Navigate unstable dimensions. 4K
+                                    Manacore texture pack available.</div>
                             </td>
                             <td><span class="genre-tag">Horror</span><span class="genre-tag">Explore</span></td>
                             <td class="rating-stars">★★★☆☆</td>
-                            <td class="price-cell"><span class="orig-price">9 ut</span><br><span class="sale-price">4 ut 5 ud</span></td>
+                            <td class="price-cell"><span class="orig-price">6 ut 5 ud</span><br><span class="sale-price">3 ut 1 ud</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -607,7 +713,7 @@
                         <div class="ad-title">OrbStore Premium™</div>
                         Exclusive deals · Early access<br>
                         Cloud saves · Priority downloads<br><br>
-                        <b>3 um/month</b><br>
+                        <b>21 ut/month</b><br>
                         <a href="#">Learn more →</a>
                     </div>
                 </div>
@@ -627,9 +733,12 @@
     </div>
 
     <div class="footer">
-        <p>&copy; 2005 A.U. Orb Digital Distribution &middot; <a href="about.html">About Us</a> &middot; <a href="support.html">Support</a></p>
-        <p><a href="#">Terms of Service</a> &middot; <a href="#">Privacy Policy</a> &middot; <a href="#">Refund Policy</a> &middot; <a href="community.html">Community Forums</a></p>
-        <p style="margin-top:6px;">Best viewed with Scryer 7+ at 800&times;600 &middot; <a href="#">Report a problem</a></p>
+        <p>&copy; 2005 A.U. Orb Digital Distribution &middot; <a href="about.html">About Us</a> &middot; <a
+                href="support.html">Support</a></p>
+        <p><a href="#">Terms of Service</a> &middot; <a href="#">Privacy Policy</a> &middot; <a href="#">Refund
+                Policy</a> &middot; <a href="community.html">Community Forums</a></p>
+        <p style="margin-top:6px;">Best viewed with Scryer 7+ at 800&times;600 &middot; <a href="#">Report a problem</a>
+        </p>
     </div>
 </body>
 
